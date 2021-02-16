@@ -11,10 +11,10 @@ import java.util.List;
 // Main services class. Handles all models and application context data
 public class ShoppingCartServices {
 
-  private ShoppingCartServices instance = null;
+  private static ShoppingCartServices instance = null;
   private List<User> users = new ArrayList<User>();
   private List<Product> products = new ArrayList<Product>();
-  private List<Sell> sells = new ArratList<Sell>();
+  private List<Sell> sells = new ArrayList<Sell>();
 
   private ShoppingCartServices() {
     users.add(new User("admin", "admin", "admin"));
@@ -23,10 +23,10 @@ public class ShoppingCartServices {
   public static ShoppingCartServices getInstance() {
 
     if (instance == null) {
-      this.instance = this.instance;
+      instance = new ShoppingCartServices();
     }
 
-    return this.instance;
+    return instance;
 
   }
 

@@ -17,7 +17,7 @@ public class User {
     this.name = name;
   } 
 
-  public Sring getUserName() {
+  public String getUserName() {
     return this.username;
   }
 

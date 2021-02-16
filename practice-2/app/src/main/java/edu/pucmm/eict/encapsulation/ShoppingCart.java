@@ -8,7 +8,7 @@ public class ShoppingCart {
   String id;
   List<Product> products;
 
-  public ShoppinCart() {
+  public ShoppingCart() {
     
   }
 
@@ -29,7 +29,7 @@ public class ShoppingCart {
     return this.products;
   }
 
-  public void setProducts(List<Products> products) {
+  public void setProducts(List<Product> products) {
     this.products = products;
   }
 

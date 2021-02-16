@@ -24,10 +24,11 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
 
     // Javalin dependency 
-    implementation 'io.javalin:javalin:3.13.0'
+    // https://mvnrepository.com/artifact/io.javalin/javalin
+    implementation group: 'io.javalin', name: 'javalin', version: '3.13.3'
 
     //Logger
-    implementation "org.slf4j:slf4j-simple:1.7.28"
+    implementation 'org.slf4j:slf4j-simple:1.7.28'
 }
 
 application {
