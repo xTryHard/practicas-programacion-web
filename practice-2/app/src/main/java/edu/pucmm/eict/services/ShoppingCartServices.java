@@ -21,10 +21,26 @@ public class ShoppingCartServices {
   public static ShoppingCartServices getInstance() {
 
     if (instance == null) {
-      this.instance = this.instance
+      this.instance = this.instance;
     }
-    
+
     return this.instance;
 
   }
+
+  private Product getProductById(String id) {
+    return this.products.stream().filter(e -> e.getId().equalsIgnoreCase(id)).findFirst().orElse(null);
+  }
+
+  //Returns true if created, false if exists a product with the ID;
+  public boolean createProduct(Product product) {
+    if (this.getProductById(product.getId()) != null) {
+      return false;
+    }
+    this.products.add(product);
+    return true;
+  }
+
+  
+
 }
