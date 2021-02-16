@@ -1,4 +1,6 @@
 
+package edu.pucmm.eict.encapsulation;
+
 public class User {
   
   String username;
@@ -38,5 +40,5 @@ public class User {
   public void setName(String name) {
     this.name = name;
   }
-  
+
 }

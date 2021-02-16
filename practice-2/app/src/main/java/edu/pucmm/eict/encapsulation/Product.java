@@ -1,3 +1,6 @@
+
+package edu.pucmm.eict.encapsulation;
+
 import java.math.BigDecimal;
 
 public class Product {
