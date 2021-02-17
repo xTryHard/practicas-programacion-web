@@ -3,9 +3,9 @@ package edu.pucmm.eict.encapsulation;
 
 public class User {
   
-  String username;
-  String password;
-  String name;
+  private String username;
+  private String password;
+  private String name;
 
   public User() {
 

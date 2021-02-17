@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ShoppingCart {
 
-  String id;
-  List<Product> products;
+  private String id;
+  private List<Product> products;
 
   public ShoppingCart() {
     

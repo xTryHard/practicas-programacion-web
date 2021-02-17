@@ -7,5 +7,9 @@ public abstract class BaseController {
   
   protected Javalin app;
 
-  abstract void applyRoutes();
+  public BaseController(Javalin app) {
+    this.app = app;
+  }
+  
+  public abstract void applyRoutes();
 }

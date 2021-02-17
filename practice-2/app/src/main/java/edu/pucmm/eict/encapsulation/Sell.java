@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Sell {
 
-  String id;
-  Date sellDate;
-  String clientName;
-  List<Product> products; 
+  private String id;
+  private Date sellDate;
+  private String clientName;
+  private List<Product> products; 
 
   public Sell() {
 

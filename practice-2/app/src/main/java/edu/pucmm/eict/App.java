@@ -3,13 +3,16 @@
  */
 package edu.pucmm.eict;
 
+import edu.pucmm.eict.controllers.AdminController;
+import io.javalin.Javalin;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Javalin app = Javalin.create(config -> {
+            config.addStaticFiles("/public");
+        }).start(3000);
+        
+        new AdminController(app).applyRoutes();
     }
 }

@@ -30,8 +30,8 @@ public class ShoppingCartServices {
 
   }
 
-  private Product getProductById(String id) {
-    return this.products.stream().filter(e -> e.getId().equalsIgnoreCase(id)).findFirst().orElse(null);
+  private Product getProductById(int id) {
+    return this.products.stream().filter(e -> e.getId() == id).findFirst().orElse(null);
   }
 
   //Returns true if created, false if exists a product with the ID;
@@ -55,15 +55,15 @@ public class ShoppingCartServices {
       return false;
     }
 
-    foundProduct.setId(product.getId());
+    // foundProduct.setId(product.getId());
     foundProduct.setName(product.getName());
     foundProduct.setPrice(product.getPrice());
 
     return true;
   }
 
-  public boolean deleteProduct(Product product) {
-    return products.remove(product);
+  public boolean deleteProduct(int id) {
+    return products.remove(this.getProductById(id));
   }
 
   public void addSell(Sell sell) {

@@ -2,28 +2,31 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product {
 
-  String id;
-  String name;
-  BigDecimal price;
+  private static final AtomicInteger idCount = new AtomicInteger(0);
+  private int id;
+  private String name;
+  private BigDecimal price;
+
 
   public Product() {
 
   }
 
-  public Product(String id, String name, BigDecimal price) {
-    this.id = id;
+  public Product(String name, BigDecimal price) {
+    this.id = idCount.incrementAndGet();
     this.name = name;
     this.price = price;
   }
 
-  public String getId() {
+  public int getId() {
     return this.id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
