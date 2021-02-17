@@ -77,6 +77,7 @@ public class GeneralControllers extends BaseController {
     app.get("/shop", ctx -> {
       List<Product> products = ShoppingCartServices.getInstance().getProducts();
       //Inject products to template
+      ctx.render("/templates/shop.html");
     });
 
   }
