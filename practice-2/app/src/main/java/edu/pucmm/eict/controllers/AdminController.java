@@ -6,8 +6,10 @@ import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
+import edu.pucmm.eict.encapsulation.Sell;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 public class AdminController extends BaseController{
@@ -22,6 +24,12 @@ public class AdminController extends BaseController{
 
       before(ctx -> {
         //Validations
+        String admin = ctx.sessionAttribute("admin");
+
+        if (admin == null) {
+          //redirect to 401
+        }
+
       });
 
       get("/", ctx -> {
@@ -84,6 +92,13 @@ public class AdminController extends BaseController{
 
       });
     
+      get("/sells", ctx -> {
+
+        List<Sell> sells = ShoppingCartServices.getInstance().getSells();
+        //Return sell;
+
+      });
+
       });
 
     });

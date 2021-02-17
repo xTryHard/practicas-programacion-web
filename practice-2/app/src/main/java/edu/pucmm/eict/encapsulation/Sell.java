@@ -4,11 +4,13 @@ package edu.pucmm.eict.encapsulation;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Sell {
 
-  private String id;
+  private static final AtomicInteger idCount= new AtomicInteger(0);
+  private int id;
   private Date sellDate;
   private String clientName;
   private List<Product> products; 
@@ -17,18 +19,18 @@ public class Sell {
 
   }
 
-  public Sell(String id, Date sellDate, String clientName, List<Product> products) {
-    this.id = id;
+  public Sell(Date sellDate, String clientName, List<Product> products) {
+    this.id = idCount.incrementAndGet();
     this.sellDate = sellDate;
     this.clientName = clientName;
     this.products = products;
   }
 
-  public String getId() {
+  public int getId() {
     return this.id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
