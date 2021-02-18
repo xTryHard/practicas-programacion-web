@@ -2,7 +2,10 @@
 package edu.pucmm.eict.controllers;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
@@ -77,8 +80,21 @@ public class GeneralControllers extends BaseController {
     app.get("/shop", ctx -> {
       List<Product> products = ShoppingCartServices.getInstance().getProducts();
       //Inject products to template
-      ctx.render("/templates/shop.html");
+      Map<String, Object> model = new HashMap<String, Object>();
+
+      model.put("products", products);
+
+      ctx.render("/templates/shop.html", model);
     });
+
+    app.get("/shop/add/:product-id", ctx -> {
+      int id = Integer.parseInt(ctx.pathParam("product-id"));
+      Product product = ShoppingCartServices.getInstance().getProductById(id);
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+      userShoppingCart.addProduct(product);
+      ctx.sessionAttribute("shopping-cart", userShoppingCart);
+    });
+
 
   }
 

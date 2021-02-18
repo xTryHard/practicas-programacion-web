@@ -3,8 +3,12 @@
  */
 package edu.pucmm.eict;
 
+import java.math.BigDecimal;
+
 import edu.pucmm.eict.controllers.AdminController;
 import edu.pucmm.eict.controllers.GeneralControllers;
+import edu.pucmm.eict.encapsulation.Product;
+import edu.pucmm.eict.services.ShoppingCartServices;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
@@ -17,6 +21,9 @@ public class App {
         }).start(3000);
         
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
+        ShoppingCartServices.getInstance().createProduct(new Product("Reloj", new BigDecimal(8000)));
+        ShoppingCartServices.getInstance().createProduct(new Product("Lápiz", new BigDecimal(10)));
+
         new AdminController(app).applyRoutes();
         new GeneralControllers(app).applyRoutes();
 

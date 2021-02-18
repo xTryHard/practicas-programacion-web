@@ -9,8 +9,67 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: #E5E5E5;
+  background: #f4f4f4;
+}
+
+footer {
+  text-align: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.table td, th {
+  text-align: center;
+}
+
+.table th {
+  color: #f4f4f4;
+}
+
+.table {
+  border: 1px solid #333;
+}
+
+#products-table {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#product-amount {
+  width: 50%;
+  text-align: center;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  margin: 0;
 }
 
 
+/* utility classes */
+
+.bg-light-own {
+  background: #6EFAFB;
+}
+
+.heading {
+  margin: 3.75rem auto;
+  text-align: center;
+  color: #4A4238;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.table-border {
+  border: 1px solid #333;
+}
+
+.bg-tbody {
+  background: #D1D1D1;
+}
+
+.color-light {
+  color: #FFF;
+}
 

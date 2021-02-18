@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="../public/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
   <title>Document</title>
 </head>
 
 <body>
 
   <header id="main-header">
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-info static-top">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-info static-top bg-light-own">
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="http://placehold.it/150x50?text=Logo" alt="">
@@ -26,18 +26,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
+              <a class="nav-link" href="#">Comprar
+                <!-- <span class="sr-only">(current)</span> -->
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="#">Ventas realizadas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
+              <a class="nav-link" href="#">Administrar productos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="#">Carrito (ø)</a>
             </li>
           </ul>
         </div>
@@ -45,7 +45,40 @@
     </nav>
   </header>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  <main>
+    <div id="product-heading">
+      <h1 class="heading">Listado de Productos</h1>
+    </div>
+    <div id="products-table">
+      <table class="table table-bordered table-hover">
+        <thead class="bg-info">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio (RD$)</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody class="bg-tbody">
+          <tr th:each="product : ${products}">
+            <td style="width: 25%" th:text="${product.name}"></td>
+            <td style="width: 25%" th:text="${product.price}"></td>
+            <td style="width: 25%;">
+              <form action="'add/'+${product.id}"><input type="number" id="product-amount" placeholder="" value="1"
+                  name="product-amount"></form>
+            </td>
+            <td style="width: 25%"><button type="submit" class="btn btn-success" form="">Agregar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <footer>
+    Copyright &copy; 2021 Sensei Rafa. All Rights Reserved
+  </footer>
+
+  <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

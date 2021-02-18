@@ -30,7 +30,7 @@ public class ShoppingCartServices {
 
   }
 
-  private Product getProductById(int id) {
+  public Product getProductById(int id) {
     return this.products.stream().filter(e -> e.getId() == id).findFirst().orElse(null);
   }
 
