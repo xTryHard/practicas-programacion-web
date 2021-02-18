@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product {
 
-  private static final AtomicInteger idCount = new AtomicInteger(0);
+  private static AtomicInteger idCount = new AtomicInteger(0);
   private int id;
   private String name;
   private BigDecimal price;

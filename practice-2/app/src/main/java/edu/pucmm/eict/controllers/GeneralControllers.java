@@ -47,6 +47,8 @@ public class GeneralControllers extends BaseController {
       //Vista del carrito;
       ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
       //Inject shopping cart to view;
+      ctx.render("/templates/shopping-cart.html");
+
     });
 
     //Process purchase of the items in the cart
@@ -82,17 +84,24 @@ public class GeneralControllers extends BaseController {
       //Inject products to template
       Map<String, Object> model = new HashMap<String, Object>();
 
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+
       model.put("products", products);
+      model.put("cartAmount", userShoppingCart.getTotalAmount());
 
       ctx.render("/templates/shop.html", model);
     });
 
-    app.get("/shop/add/:product-id", ctx -> {
+    app.post("/shop/add/:product-id", ctx -> {
       int id = Integer.parseInt(ctx.pathParam("product-id"));
+      int amount = Integer.parseInt(ctx.formParam("product-amount"));
+      System.out.println(String.format("ID: %d | amount: %d", id, amount));
+
       Product product = ShoppingCartServices.getInstance().getProductById(id);
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
-      userShoppingCart.addProduct(product);
+      userShoppingCart.addProduct(product, amount);
       ctx.sessionAttribute("shopping-cart", userShoppingCart);
+      ctx.redirect("/shop");
     });
 
 
