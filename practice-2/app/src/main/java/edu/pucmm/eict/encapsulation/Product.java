@@ -10,7 +10,7 @@ public class Product {
   private int id;
   private String name;
   private BigDecimal price;
-
+  private int amount;
 
   public Product() {
 
@@ -20,6 +20,7 @@ public class Product {
     this.id = idCount.incrementAndGet();
     this.name = name;
     this.price = price;
+    this.amount = 0;
   }
 
   public int getId() {
@@ -44,6 +45,10 @@ public class Product {
 
   public void setPrice (BigDecimal price) {
     this.price = price;
+  }
+
+  public int getAmount() {
+    return this.amount;
   }
 
 }

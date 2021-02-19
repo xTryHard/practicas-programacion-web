@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head">
   <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 
 <body>
 
-  <header id="main-header">
+  <header th:fragment="main-header" id="main-header">
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-info static-top bg-light-own">
       <div class="container">
         <a class="navbar-brand" href="#">
@@ -25,19 +25,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li th:class="'nav-item'+' '+${activeShop}">
               <a class="nav-link" href="/shop">Comprar
                 <!-- <span class="sr-only">(current)</span> -->
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./sells.html">Ventas realizadas</a>
+            <li th:class="'nav-item'+' '+${activeSells}">
+              <a class="nav-link" href="/sells">Ventas realizadas</a>
             </li>
-            <li class="nav-item">
+            <li th:class="'nav-item'+' '+${activeAdmin}">
               <a class="nav-link" href="#">Administrar productos</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./shopping-cart.html" th:text="'Carrito'+' '+'('+${cartAmount}+')'">Carrito
+            <li th:class="'nav-item'+' '+${activeCart}">
+              <a class="nav-link" href="/cart" th:text="'Carrito'+' '+'('+${cartAmount}+')'">Carrito
                 (ø)</a>
             </li>
           </ul>
@@ -76,8 +76,12 @@
       </table>
     </div>
   </main>
-  <footer>
-    Copyright &copy; 2021 Sensei Rafa. All Rights Reserved
+  <footer class="bg-light text-center text-lg-start">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      Copyright &copy; 2021 Sensei Rafa. All Rights Reserved.
+    </div>
+    <!-- Copyright -->
   </footer>
 
   <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"

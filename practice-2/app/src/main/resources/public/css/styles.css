@@ -32,9 +32,41 @@ footer {
   border: 1px solid #333;
 }
 
-#products-table {
+
+#products-table, #client-data {
   width: 80%;
   margin: 0 auto;
+}
+
+#client-data {
+
+  border: 1px solid #D1D1D1;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+#client-data input {
+  width: 60%;
+  margin-left: 5px;
+}
+
+.total-text {
+
+  color: #fff;
+  border: 1px solid #333;
+
+}
+
+#buttons-cart {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-btn {
+  margin: 50px 10px;
+  padding: 10px 60px;
 }
 
 #product-amount {
@@ -45,7 +77,6 @@ footer {
   border-radius: 3px;
   margin: 0;
 }
-
 
 /* utility classes */
 

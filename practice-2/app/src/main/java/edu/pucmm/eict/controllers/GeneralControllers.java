@@ -1,6 +1,7 @@
 
 package edu.pucmm.eict.controllers;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +44,38 @@ public class GeneralControllers extends BaseController {
       ctx.redirect("/shop");
     });
 
-    app.get("/shopping-cart", ctx -> {
+    app.get("/cart", ctx -> {
       //Vista del carrito;
-      ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
+    
+      //Inject products to template
+      Map<String, Object> model = new HashMap<String, Object>();
+
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+      List<Product> products = userShoppingCart.getProducts();
+      List<Integer> productAmounts = userShoppingCart.getProductAmountList();
+      List<BigDecimal> productTotalPrice = userShoppingCart.getProductTotalPrice();
+      BigDecimal total = userShoppingCart.getCartTotalPrice();
+
+      model.put("products", products);
+      model.put("cartAmount", userShoppingCart.getTotalAmount());
+      model.put("activeCart", "active");
+      model.put("productAmounts", productAmounts.toArray());
+      model.put("productTotalPrice", productTotalPrice.toArray());
+      model.put("totalPrice", total);
+    
+
       //Inject shopping cart to view;
-      ctx.render("/templates/shopping-cart.html");
+      ctx.render("/templates/cart.html", model);
+
+    });
+
+    app.get("/cart/delete/:product-id", ctx -> {
+      int productId = Integer.parseInt(ctx.pathParam("product-id"));
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+      userShoppingCart.deleteProduct(userShoppingCart.getProductById(productId));
+      ctx.sessionAttribute("shopping-cart", userShoppingCart);
+
+      ctx.redirect("/cart");;
 
     });
 
@@ -63,9 +91,11 @@ public class GeneralControllers extends BaseController {
       ctx.redirect("/shop");
     });
 
-    app.get("/clear-cart", ctx -> {
+    app.get("/cart/clear-cart", ctx -> {
       //Clear cart
-      ctx.redirect("/shop");
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+      userShoppingCart.clearProductList();
+      ctx.redirect("/cart");
     });
 
     app.get("/login/:mode", ctx -> {
@@ -88,6 +118,7 @@ public class GeneralControllers extends BaseController {
 
       model.put("products", products);
       model.put("cartAmount", userShoppingCart.getTotalAmount());
+      model.put("activeShop", "active");
 
       ctx.render("/templates/shop.html", model);
     });

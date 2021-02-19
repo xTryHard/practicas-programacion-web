@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/templates/shop.html::head">
+  <title>The IT Shop | Carrito</title>
+</head>
+
+<body>
+  <header th:replace="/templates/shop.html::main-header">
+  </header>
+
+  <main>
+    <div id="product-heading">
+      <h1 class="heading">Carrito de Compra</h1>
+    </div>
+    <form>
+      <div id="client-data" class="form-group form-inline">
+        <label for="formGroupExampleInput">Nombre del Cliente: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Rafa Sensei" required>
+      </div>
+    </form>
+    <div id="products-table">
+      <table class="table table-bordered table-hover">
+        <thead class="bg-info">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio (RD$)</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Total</th>
+            <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody class="bg-tbody">
+          <tr th:each="product,iter : ${products}">
+            <td style="width: 25%" th:text="${product.name}"></td>
+            <td style="width: 25%" th:text="${product.price}"></td>
+            <td style="width: 16.66%" th:text="${productAmounts[__${iter.index}__]}">
+            </td>
+            <td style="width: 16.66%" th:text="${productTotalPrice[__${iter.index}__]}"></td>
+            <td style="width: 16.66%"><a class="btn btn-danger"
+                th:href="'/cart/delete/'+${product.id}">Eliminar</button>
+            </td>
+          </tr>
+          <tr>
+            <td style="visibility: hidden;"></td>
+            <td style="visibility: hidden;"></td>
+            <td id="total" class="total-text bg-info">TOTAL: </td>
+            <td class="total-text bg-info" th:text="${totalPrice}">{0}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="buttons-cart">
+      <button type="button" class="btn btn-outline-success btn-lg flex-btn">Procesar Compra</button>
+      <a href="/cart/clear-cart" class="btn btn-outline-danger btn-lg flex-btn">Limpiar Carro Compra</a>
+    </div>
+  </main>
+
+  <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
