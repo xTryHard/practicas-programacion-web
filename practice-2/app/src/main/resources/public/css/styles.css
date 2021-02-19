@@ -10,6 +10,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   background: #f4f4f4;
+  height: 100%;
 }
 
 footer {
@@ -18,6 +19,21 @@ footer {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.sell-wrapper {
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.sell-client {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 2rem;
 }
 
 .table td, th {

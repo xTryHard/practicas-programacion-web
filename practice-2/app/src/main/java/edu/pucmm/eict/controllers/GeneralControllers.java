@@ -80,15 +80,16 @@ public class GeneralControllers extends BaseController {
     });
 
     //Process purchase of the items in the cart
-    app.post("/purchase-cart", ctx -> {
+    app.post("/cart/purchase-cart", ctx -> {
 
-      String user = ctx.formParam("user");
+      String user = ctx.formParam("clientName");
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
 
-      ShoppingCartServices.getInstance().addSell(new Sell(new Date(), user,userShoppingCart.getProducts()));
+      ShoppingCartServices.getInstance().addSell(new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice()));
 
       ctx.req.getSession().invalidate();
       ctx.redirect("/shop");
+      System.out.println("Compra realizada: "+ShoppingCartServices.getInstance().getSells().get(0));
     });
 
     app.get("/cart/clear-cart", ctx -> {

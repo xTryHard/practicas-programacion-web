@@ -9,7 +9,9 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import edu.pucmm.eict.encapsulation.Sell;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AdminController extends BaseController{
@@ -96,7 +98,11 @@ public class AdminController extends BaseController{
 
         List<Sell> sells = ShoppingCartServices.getInstance().getSells();
         //Return sell;
-
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("sells", sells);
+        model.put("activeSells", "active");
+        
+        ctx.render("/templates/sells.html", model);
       });
 
       });

@@ -31,7 +31,7 @@
               </a>
             </li>
             <li th:class="'nav-item'+' '+${activeSells}">
-              <a class="nav-link" href="/sells">Ventas realizadas</a>
+              <a class="nav-link" href="/admin/sells">Ventas realizadas</a>
             </li>
             <li th:class="'nav-item'+' '+${activeAdmin}">
               <a class="nav-link" href="#">Administrar productos</a>
@@ -66,7 +66,7 @@
             <td style="width: 25%" th:text="${product.price}"></td>
             <td style="width: 25%;">
               <form method="POST" th:id="'amount-form-'+${product.id}" th:action="'shop/add/'+${product.id}"><input
-                  type="number" id="product-amount" placeholder="" value="1" name="product-amount"></form>
+                  type="number" id="product-amount" placeholder="" value="1" name="product-amount" required></form>
             </td>
             <td style="width: 25%"><button type="submit" class="btn btn-success"
                 th:form="'amount-form-'+${product.id}">Agregar</button>

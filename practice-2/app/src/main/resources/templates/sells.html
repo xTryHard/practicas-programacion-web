@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="./shop.html::head">
 
+<head th:replace="/templates/shop.html::head">
+  <title>The IT Shop | Ventas</title>
 </head>
 
 <body>
+  <header th:replace="/templates/shop.html::main-header">
+  </header>
+  <div id="product-heading">
+    <h1 class="heading">Listado de Ventas Realizadas</h1>
+  </div>
+  <div id="sell-component" th:each="sell : ${sells}">
+    <h2 class="sell-client" th:text="${sell.clientName}+' '+'–'+' '+${sell.sellDateStr}">Cliente</h2>
 
+    <div id="products-table" class="sell-wrapper">
+      <table class="table table-bordered table-hover">
+        <thead class="bg-info">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio (RD$)</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody class="bg-tbody">
+          <tr th:each="product,iter : ${sell.products}">
+            <td style="width: 25%" th:text="${product.name}"></td>
+            <td style="width: 25%" th:text="${product.price}"></td>
+            <td style="width: 16.66%" th:text="${sell.amountProductList[__${iter.index}__]}">
+            </td>
+            <td style="width: 16.66%" th:text="${sell.productTotalPrice[__${iter.index}__]}"></td>
+          </tr>
+          <tr>
+            <td style="visibility: hidden;"></td>
+            <td style="visibility: hidden;"></td>
+            <td id="total" class="total-text bg-info">TOTAL: </td>
+            <td class="total-text bg-info" th:text="${sell.totalPrice}">{0}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -13,10 +13,10 @@
     <div id="product-heading">
       <h1 class="heading">Carrito de Compra</h1>
     </div>
-    <form>
+    <form method="POST" id="form-purchase" action="/cart/purchase-cart">
       <div id="client-data" class="form-group form-inline">
         <label for="formGroupExampleInput">Nombre del Cliente: </label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Rafa Sensei" required>
+        <input type="text" class="form-control" id="clientName" name="clientName" placeholder="Rafa Sensei" required>
       </div>
     </form>
     <div id="products-table">
@@ -51,7 +51,8 @@
       </table>
     </div>
     <div id="buttons-cart">
-      <button type="button" class="btn btn-outline-success btn-lg flex-btn">Procesar Compra</button>
+      <button type="submit" class="btn btn-outline-success btn-lg flex-btn" form="form-purchase">Procesar
+        Compra</button>
       <a href="/cart/clear-cart" class="btn btn-outline-danger btn-lg flex-btn">Limpiar Carro Compra</a>
     </div>
   </main>
