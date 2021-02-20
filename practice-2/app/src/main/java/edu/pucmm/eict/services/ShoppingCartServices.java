@@ -15,6 +15,7 @@ public class ShoppingCartServices {
   private List<User> users = new ArrayList<User>();
   private List<Product> products = new ArrayList<Product>();
   private List<Sell> sells = new ArrayList<Sell>();
+  private boolean adminMode = false;
 
   private ShoppingCartServices() {
     users.add(new User("admin", "admin", "admin"));
@@ -72,6 +73,22 @@ public class ShoppingCartServices {
 
   public List<Sell> getSells() {
     return this.sells;
+  }
+
+  public List<User> getUsers() {
+    return this.users;
+  }
+
+  public boolean validateAdmin(String username, String password){
+    return username.equals(this.users.get(0).getUserName()) && password.equals(this.users.get(0).getPassword());
+  }
+
+  public boolean getAdminMode() {
+    return this.adminMode;
+  }
+
+  public void setAdminMode(boolean mode) {
+    this.adminMode = mode;
   }
 
 }

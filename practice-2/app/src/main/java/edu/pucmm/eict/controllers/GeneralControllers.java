@@ -10,12 +10,14 @@ import java.util.Map;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
+import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
 
 public class GeneralControllers extends BaseController {
 
+  private String adminMode = "";
   public GeneralControllers(Javalin app) {
     super(app);
   }
@@ -28,8 +30,9 @@ public class GeneralControllers extends BaseController {
       String user = ctx.sessionAttribute("user");
       
       //invalidate session if admin leaves admin block
-      if (admin == "admin") {
-        ctx.req.getSession().invalidate();
+      if (admin != null) {
+        ctx.sessionAttribute("admin", null);
+        System.out.println("Si");
       }
 
       if (user == null) {
@@ -99,15 +102,34 @@ public class GeneralControllers extends BaseController {
       ctx.redirect("/cart");
     });
 
+    app.post("/login-validate", ctx -> {
+      String username = ctx.formParam("username");
+      String password = ctx.formParam("password");
+
+      System.out.println(username+" "+password);
+      boolean isAdmin = ShoppingCartServices.getInstance().validateAdmin(username, password);
+
+      if (!isAdmin) {
+        ctx.redirect("/login/"+this.adminMode);
+
+      } else {
+        if (this.adminMode.equals("sells")) ctx.redirect("/admin/sells");
+        else if (this.adminMode.equals("admin")) ctx.redirect("/admin");
+
+        ctx.sessionAttribute("admin", "admin");
+      }
+    });
+
     app.get("/login/:mode", ctx -> {
       String mode = ctx.pathParam("mode");
+      this.adminMode = mode;
 
-      if (mode.equalsIgnoreCase("sells")) {
-        ctx.redirect("/admin/sells");
+      HashMap<String, Object> model = new HashMap<>();
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
 
-      } else if (mode.equalsIgnoreCase("admin")) {
-        ctx.redirect("/admin");
-      }
+      model.put("cartAmount", userShoppingCart.getTotalAmount());
+    
+      ctx.render("/templates/login.html", model);
     });
 
     app.get("/shop", ctx -> {

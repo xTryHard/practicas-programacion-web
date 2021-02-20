@@ -9,7 +9,7 @@
   <header th:replace="/templates/shop.html::main-header">
   </header>
 
-  <main>
+  <main style="overflow-y: auto; max-height: 600px;">
     <div id="product-heading">
       <h1 class="heading">Carrito de Compra</h1>
     </div>
@@ -19,7 +19,7 @@
         <input type="text" class="form-control" id="clientName" name="clientName" placeholder="Rafa Sensei" required>
       </div>
     </form>
-    <div id="products-table">
+    <div id="products-table" style="overflow-y:auto;">
       <table class="table table-bordered table-hover">
         <thead class="bg-info">
           <tr>
@@ -56,7 +56,8 @@
       <a href="/cart/clear-cart" class="btn btn-outline-danger btn-lg flex-btn">Limpiar Carro Compra</a>
     </div>
   </main>
-
+  <footer th:replace="/templates/shop.html::footer"></footer>
+  <script src="https://kit.fontawesome.com/156ff56ddf.js" crossorigin="anonymous"></script>
   <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>

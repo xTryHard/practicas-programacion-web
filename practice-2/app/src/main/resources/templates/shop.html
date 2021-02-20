@@ -16,8 +16,7 @@
   <header th:fragment="main-header" id="main-header">
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-info static-top fixed-top bg-light-own">
       <div class="container">
-        <a class="navbar-brand" href="#">The IT Shop
-          <img src="/img/brand.png" width="50px" height="50%" alt="">
+        <a class="navbar-brand" href="/shop"><i class="fas fa-shopping-cart fa-lg"></i> &nbsp; The IT Shop
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
           aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,10 +30,10 @@
               </a>
             </li>
             <li th:class="'nav-item'+' '+${activeSells}">
-              <a class="nav-link" href="/admin/sells">Ventas realizadas</a>
+              <a class="nav-link" href="/login/sells">Ventas realizadas</a>
             </li>
             <li th:class="'nav-item'+' '+${activeAdmin}">
-              <a class="nav-link" href="#">Administrar productos</a>
+              <a class="nav-link" href="/login/admin">Administrar productos</a>
             </li>
             <li th:class="'nav-item'+' '+${activeCart}">
               <a class="nav-link" href="/cart" th:text="'Carrito'+' '+'('+${cartAmount}+')'">Carrito
@@ -50,7 +49,7 @@
     <div id="product-heading">
       <h1 class="heading">Listado de Productos</h1>
     </div>
-    <div id="products-table">
+    <div id="products-table" style="overflow-y:auto;">
       <table class="table table-bordered table-hover">
         <thead class="bg-info">
           <tr>
@@ -76,7 +75,7 @@
       </table>
     </div>
   </main>
-  <footer class="bg-light text-center text-lg-start">
+  <footer th:fragment="footer" class="bg-light text-center text-lg-start">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
       Copyright &copy; 2021 Sensei Rafa. All Rights Reserved.
@@ -84,6 +83,7 @@
     <!-- Copyright -->
   </footer>
 
+  <script src="https://kit.fontawesome.com/156ff56ddf.js" crossorigin="anonymous"></script>
   <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>

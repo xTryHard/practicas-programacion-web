@@ -84,9 +84,22 @@ footer {
   justify-content: center;
 }
 
+.btn-group-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-btn-2 {
+  margin: 0 10px;
+  margin-top: 15px;
+}
 .flex-btn {
   margin: 50px 10px;
   padding: 10px 60px;
+}
+
+.login-wrapper {
+  margin: 200px auto;
 }
 
 #product-amount {
@@ -99,6 +112,8 @@ footer {
 }
 
 /* utility classes */
+
+
 
 .bg-light-own {
   background: #6EFAFB;
@@ -125,3 +140,16 @@ footer {
   color: #FFF;
 }
 
+#products-table {
+  max-height: 400px;
+}
+
+/* Just common table stuff. Really. */
+table  { 
+  border-collapse: collapse; 
+  width: 100%; 
+}
+
+th, td { 
+  padding: 8px 16px; 
+}
