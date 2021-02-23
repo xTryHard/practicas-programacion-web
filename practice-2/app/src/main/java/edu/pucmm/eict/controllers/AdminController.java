@@ -22,14 +22,14 @@ public class AdminController extends BaseController{
   }
 
   public void applyRoutes() {
-    // app.before("/admin", ctx -> {
-    //   String admin = ctx.sessionAttribute("admin");
-    //   System.out.println("Admin: "+admin);
-    //   if (admin == null  && ShoppingCartServices.getInstance().getAdminMode() == false) {
+    app.before("/admin", ctx -> {
+      String admin = ctx.sessionAttribute("admin");
+      System.out.println("Admin: "+admin);
+      if (admin == null  && ShoppingCartServices.getInstance().getAdminMode() == false) {
         
-    //     ctx.redirect("/shop");
-    //   }
-    // });
+        ctx.redirect("/shop");
+      }
+    });
 
     app.routes(() -> {
       path("/admin", () -> {

@@ -174,6 +174,9 @@ public class GeneralControllers extends BaseController {
     });
 
 
+    app.error(404, ctx -> {
+      ctx.render("/templates/error.html");
+    });
   }
 
 
