@@ -22,10 +22,19 @@ public class AdminController extends BaseController{
   }
 
   public void applyRoutes() {
+    // app.before("/admin", ctx -> {
+    //   String admin = ctx.sessionAttribute("admin");
+    //   System.out.println("Admin: "+admin);
+    //   if (admin == null  && ShoppingCartServices.getInstance().getAdminMode() == false) {
+        
+    //     ctx.redirect("/shop");
+    //   }
+    // });
+
     app.routes(() -> {
       path("/admin", () -> {
 
-      before("/", ctx -> {
+      before(ctx -> {
         //Validations
         String admin = ctx.sessionAttribute("admin");
         System.out.println("Admin: "+admin);
@@ -48,7 +57,6 @@ public class AdminController extends BaseController{
 
 
       get("/", ctx ->{
-        ShoppingCartServices.getInstance().setAdminMode(false);
         List<Product> products = ShoppingCartServices.getInstance().getProducts();
         HashMap<String, Object> model = new HashMap<>();
         model.put("products", products);
@@ -79,8 +87,6 @@ public class AdminController extends BaseController{
       });
 
       post("/create-product", ctx -> {
-        ShoppingCartServices.getInstance().setAdminMode(true);
-
         String name = ctx.formParam("productName");
         BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
 
@@ -95,7 +101,6 @@ public class AdminController extends BaseController{
       });
 
       get("/update-product/:product-id", ctx -> {
-        ShoppingCartServices.getInstance().setAdminMode(true);
         int id = Integer.parseInt(ctx.pathParam("product-id"));
         Product product = ShoppingCartServices.getInstance().getProductById(id);
         HashMap<String, Object> model = new HashMap<>();
@@ -117,7 +122,6 @@ public class AdminController extends BaseController{
         int id = Integer.parseInt(ctx.pathParam("product-id"));
         String name = ctx.formParam("productName");
         BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
-        ShoppingCartServices.getInstance().setAdminMode(true);
 
         Product productToUpdate = new Product();
         productToUpdate.setId(id);
@@ -137,7 +141,6 @@ public class AdminController extends BaseController{
 
       get("/delete-product/:product-id", ctx -> {
 
-        ShoppingCartServices.getInstance().setAdminMode(true);
         int id = Integer.parseInt(ctx.pathParam("product-id"));
 
         boolean done = ShoppingCartServices.getInstance().deleteProduct(id);

@@ -26,15 +26,9 @@ public class GeneralControllers extends BaseController {
 
     app.before(ctx -> {
 
-      String admin = ctx.sessionAttribute("admin");
+      // String admin = ctx.sessionAttribute("admin");
       String user = ctx.sessionAttribute("user");
       
-      //invalidate session if admin leaves admin block
-      if (admin != null) {
-        ctx.sessionAttribute("admin", null);
-        System.out.println("Si");
-      }
-
       if (user == null) {
         ctx.sessionAttribute("user", "user");
         ctx.sessionAttribute("shopping-cart", new ShoppingCart());
@@ -42,6 +36,25 @@ public class GeneralControllers extends BaseController {
 
     });
     
+    app.before("/shop", ctx -> {
+      String admin = ctx.sessionAttribute("admin"); 
+            //invalidate session if admin leaves admin block
+            if (admin != null) {
+              ctx.sessionAttribute("admin", null);
+              System.out.println("Si");
+              ShoppingCartServices.getInstance().setAdminMode(false);
+            }      
+    });
+
+    app.before("/cart", ctx -> {
+      String admin = ctx.sessionAttribute("admin"); 
+            //invalidate session if admin leaves admin block
+            if (admin != null) {
+              ctx.sessionAttribute("admin", null);
+              System.out.println("Si");
+              ShoppingCartServices.getInstance().setAdminMode(false);
+            }      
+    });
 
     app.get("/", ctx -> {
       ctx.redirect("/shop");
@@ -113,10 +126,12 @@ public class GeneralControllers extends BaseController {
         ctx.redirect("/login/"+this.adminMode);
 
       } else {
-        if (this.adminMode.equals("sells")) ctx.redirect("/admin/sells");
-        else if (this.adminMode.equals("admin")) ctx.redirect("/admin");
 
         ctx.sessionAttribute("admin", "admin");
+        ShoppingCartServices.getInstance().setAdminMode(true);
+
+        if (this.adminMode.equals("sells")) ctx.redirect("/admin/sells");
+        else if (this.adminMode.equals("admin")) ctx.redirect("/admin");
       }
     });
 
