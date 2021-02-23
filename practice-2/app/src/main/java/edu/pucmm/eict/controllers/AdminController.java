@@ -66,10 +66,15 @@ public class AdminController extends BaseController{
       get("/create-product", ctx-> {
         HashMap<String, Object> model = new HashMap<>();
         ShoppingCartServices.getInstance().setAdminMode(true);
+        ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
+        int amount = shoppingCart.getTotalAmount();
+
+        model.put("cartAmount", amount);
         model.put("createEdit", "Crear Producto");
         model.put("createOrEdit", "create");
         model.put("crearEditar", "Crear");
         model.put("productId","");
+
         ctx.render("/templates/create-edit.html", model);
       });
 
@@ -95,6 +100,10 @@ public class AdminController extends BaseController{
         Product product = ShoppingCartServices.getInstance().getProductById(id);
         HashMap<String, Object> model = new HashMap<>();
 
+        ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
+        int amount = shoppingCart.getTotalAmount();
+
+        model.put("cartAmount", amount);
         model.put("createOrEdit", "update");
         model.put("productId", "/"+String.valueOf(id));
         model.put("product", product);

@@ -22,9 +22,9 @@
                   <span class="input-group-text"><i class="fas fa-shopping-basket"></i></span>
                 </div>
                 <input th:if="${!edit}" name="productName" class="form-control" placeholder="Nombre del producto"
-                  type="text">
+                  type="text" required>
                 <input th:if="${edit}" name="productName" class="form-control" placeholder="Nombre del producto"
-                  type="text" th:value="${product.name}">
+                  type="text" th:value="${product.name}" required>
               </div> <!-- input-group.// -->
             </div> <!-- form-group// -->
             <div class="form-group">
@@ -33,9 +33,9 @@
                   <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
                 <input th:if="${!edit}" class="form-control" placeholder="Precio" type="number" name="productPrice"
-                  step="0.01">
+                  step="0.01" required>
                 <input th:if="${edit}" class="form-control" placeholder="Precio" type="number" name="productPrice"
-                  step="0.01" th:value="${product.price}">
+                  step="0.01" th:value="${product.price}" required>
               </div> <!-- input-group.// -->
             </div> <!-- form-group// -->
             <div class="form-group btn-group-flex">
