@@ -1,0 +1,156 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f4f4f4;
+  height: 100%;
+}
+
+footer {
+  text-align: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#sell-component {
+  margin-bottom: 1rem;
+}
+
+.sell-wrapper {
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.sell-client {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.table td, th {
+  text-align: center;
+}
+
+.table th {
+  color: #f4f4f4;
+}
+
+.table {
+  border: 1px solid #333;
+}
+
+
+#products-table, #client-data {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#client-data {
+
+  border: 1px solid #D1D1D1;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+#client-data input {
+  width: 60%;
+  margin-left: 5px;
+}
+
+.total-text {
+
+  color: #fff;
+  border: 1px solid #333;
+
+}
+
+#buttons-cart {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-group-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-btn-2 {
+  margin: 0 10px;
+  margin-top: 15px;
+}
+.flex-btn {
+  margin: 50px 10px;
+  padding: 10px 60px;
+}
+
+.login-wrapper {
+  margin: 100px auto;
+}
+
+#product-amount {
+  width: 50%;
+  text-align: center;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  margin: 0;
+}
+
+/* utility classes */
+
+
+
+.bg-light-own {
+  background: #6EFAFB;
+}
+
+.heading {
+  margin: 3.75rem auto;
+  text-align: center;
+  color: #4A4238;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 6rem;
+}
+
+.table-border {
+  border: 1px solid #333;
+}
+
+.bg-tbody {
+  background: #D1D1D1;
+}
+
+.color-light {
+  color: #FFF;
+}
+
+#products-table {
+  max-height: 400px;
+}
+
+/* Just common table stuff. Really. */
+table  { 
+  border-collapse: collapse; 
+  width: 100%; 
+}
+
+th, td { 
+  padding: 8px 16px; 
+}
+
