@@ -135,6 +135,17 @@ public class GeneralControllers extends BaseController {
       }
     });
 
+    app.before("/login/:mode", ctx-> {
+      String mode = ctx.pathParam("mode");
+      String admin = ctx.sessionAttribute("admin");
+
+      if (admin != null) {
+        if (mode.equals("sells")) ctx.redirect("/admin/sells");
+        else if (mode.equals("admin")) ctx.redirect("/admin");
+      }
+      
+    });
+
     app.get("/login/:mode", ctx -> {
       String mode = ctx.pathParam("mode");
       this.adminMode = mode;
