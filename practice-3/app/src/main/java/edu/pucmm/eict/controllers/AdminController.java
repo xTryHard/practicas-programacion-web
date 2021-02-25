@@ -8,6 +8,7 @@ import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
+import edu.pucmm.eict.encapsulation.User;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -179,7 +180,22 @@ public class AdminController extends BaseController{
       });
 
       post("/create-user", ctx -> {
+        String username = ctx.formParam("username");
+        String password = ctx.formParam("password");
+        String name = ctx.formParam("name");
 
+        boolean done = ShoppingCartServices.getInstance().createUser(new User(username, password, name));
+
+        if (done) {
+        //Rediret to list
+          HashMap<String, Object> model = new HashMap<>();
+          model.put("code", "201");
+          model.put("codeText", "Usuario creado correctamente");
+          ctx.render("/templates/error.html", model);
+        } else {
+          //Error
+          ctx.redirect("/create-user");
+        }
       });
 
       });

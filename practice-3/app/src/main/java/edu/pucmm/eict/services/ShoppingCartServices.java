@@ -35,6 +35,12 @@ public class ShoppingCartServices {
     return this.products.stream().filter(e -> e.getId() == id).findFirst().orElse(null);
   }
 
+  public User existsUser(User user) {
+    String username = user.getUserName();
+    return this.users.stream().filter(e -> e.getUserName().equals(username)).findFirst().orElse(null);
+
+  } 
+
   //Returns true if created, false if exists a product with the ID;
   public boolean createProduct(Product product) {
     if (this.getProductById(product.getId()) != null) {
@@ -44,6 +50,16 @@ public class ShoppingCartServices {
     return true;
   }
 
+  public boolean createUser(User user) {
+
+    if (this.existsUser(user) != null) {
+      return false;
+    }
+    
+    this.users.add(user);
+    return true;
+  }
+  
   public List<Product> getProducts() {
     return this.products;
   }

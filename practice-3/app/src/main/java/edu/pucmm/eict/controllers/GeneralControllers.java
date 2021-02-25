@@ -188,7 +188,11 @@ public class GeneralControllers extends BaseController {
 
 
     app.error(404, ctx -> {
-      ctx.render("/templates/error.html");
+      HashMap<String, Object> model = new HashMap<>();
+      model.put("code", "404");
+      model.put("codeText", "Oops, el recurso que estás buscando no pudo ser encontrado :(");
+      
+      ctx.render("/templates/error.html", model);
     });
   }
 
