@@ -29,6 +29,10 @@
                 <!-- <span class="sr-only">(current)</span> -->
               </a>
             </li>
+            <li th:class="'nav-item'+' '+${activeUsers}">
+              <a class="nav-link" href="/login/users">Crear Usuario
+              </a>
+            </li>
             <li th:class="'nav-item'+' '+${activeSells}">
               <a class="nav-link" href="/login/sells">Ventas realizadas</a>
             </li>

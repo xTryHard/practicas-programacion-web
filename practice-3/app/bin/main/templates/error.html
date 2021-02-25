@@ -19,10 +19,10 @@
   <div id="notfound">
     <div class="notfound">
       <div class="notfound-404">
-        <h1>404</h1>
+        <h1 th:text="${code}">404</h1>
       </div>
-      <h2>Oops, el recurso que estás buscando no pudo ser encontrado :(</h2>
-      <a href="/shop"><span class="arrow"></span>¡Regresa a la tienda!</a>
+      <h2 th:text="${codeText}">Oops, el recurso que estás buscando no pudo ser encontrado :(</h2>
+      <a href="/shop"> <span class="arrow"></span>¡Regresa a la tienda!</a>
     </div>
   </div>
 </body>
