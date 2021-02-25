@@ -168,6 +168,20 @@ public class AdminController extends BaseController{
         ctx.render("/templates/sells.html", model);
       });
 
+
+      get("/create-user", ctx -> {
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
+        model.put("activeUsers", "active");
+        model.put("cartAmount", shoppingCart.getTotalAmount());
+        ctx.render("/templates/create-user.html", model);
+      });
+
+      post("/create-user", ctx -> {
+
+      });
+
       });
 
     });

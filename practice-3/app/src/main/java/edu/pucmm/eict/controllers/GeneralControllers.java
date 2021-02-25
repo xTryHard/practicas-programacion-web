@@ -132,6 +132,7 @@ public class GeneralControllers extends BaseController {
 
         if (this.adminMode.equals("sells")) ctx.redirect("/admin/sells");
         else if (this.adminMode.equals("admin")) ctx.redirect("/admin");
+        else if (this.adminMode.equals("users")) ctx.redirect("/admin/create-user");
       }
     });
 
@@ -142,6 +143,7 @@ public class GeneralControllers extends BaseController {
       if (admin != null) {
         if (mode.equals("sells")) ctx.redirect("/admin/sells");
         else if (mode.equals("admin")) ctx.redirect("/admin");
+        else if (mode.equals("users")) ctx.redirect("/admin/create-user");
       }
       
     });
