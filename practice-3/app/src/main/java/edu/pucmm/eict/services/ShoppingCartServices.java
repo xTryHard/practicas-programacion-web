@@ -16,9 +16,11 @@ public class ShoppingCartServices {
   private List<Product> products = new ArrayList<Product>();
   private List<Sell> sells = new ArrayList<Sell>();
   private boolean adminMode = false;
+  private ProductServices productServices = new ProductServices();
 
   private ShoppingCartServices() {
     users.add(new User("admin", "admin", "admin"));
+    this.products = productServices.getAllProducts();
   }
 
   public static ShoppingCartServices getInstance() {

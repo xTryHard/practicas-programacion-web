@@ -2,6 +2,7 @@
 package edu.pucmm.eict.controllers;
 
 import edu.pucmm.eict.encapsulation.Product;
+import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
@@ -18,8 +19,10 @@ import java.util.Map;
 
 public class AdminController extends BaseController{
 
+  private ProductServices productServices;
   public AdminController(Javalin app) {
     super(app);
+    productServices = new ProductServices();
   }
 
   public void applyRoutes() {
@@ -90,11 +93,12 @@ public class AdminController extends BaseController{
       post("/create-product", ctx -> {
         String name = ctx.formParam("productName");
         BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
-
-        boolean done = ShoppingCartServices.getInstance().createProduct(new Product(name, price));
-
+        Product product = new Product(name, price);
+        boolean done = productServices.createProduct(product);
+        
         if (done) {
-        //Rediret to list
+        //Rediret to 
+        ShoppingCartServices.getInstance().createProduct(product);
           ctx.redirect("/admin");
         } else {
           //Error

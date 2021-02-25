@@ -4,9 +4,12 @@ package edu.pucmm.eict.encapsulation;
 import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.pucmm.eict.services.ProductServices;
+
+
 public class Product {
 
-  private static AtomicInteger idCount = new AtomicInteger(0);
+  private static AtomicInteger idCount = new AtomicInteger(setAtomic());
   private int id;
   private String name;
   private BigDecimal price;
@@ -21,6 +24,11 @@ public class Product {
     this.name = name;
     this.price = price;
     this.amount = 0;
+  }
+
+  private static int setAtomic() {
+    ProductServices pServices = new ProductServices();
+    return pServices.getLastId();
   }
 
   public int getId() {

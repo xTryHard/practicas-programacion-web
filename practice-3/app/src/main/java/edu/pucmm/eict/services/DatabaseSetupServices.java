@@ -30,7 +30,7 @@ public class DatabaseSetupServices {
      * Metodo para recrear las tablas necesarios
      * @throws SQLException
      */
-    public static void crearTablas() throws  SQLException{
+    public static void createTables() throws  SQLException{
       // String sql = "CREATE TABLE IF NOT EXISTS ESTUDIANTE\n" +
       //         "(\n" +
       //         "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
@@ -45,9 +45,15 @@ public class DatabaseSetupServices {
       // statement.close();
       // con.close();
       createProductTable();
-  }
-
-  private static void createProductTable() {
+      createSellTable();
+      createUserTable();
+      createSellProductTable();
+      // alterSellProductTable();
+  } 
+    /**
+     * @throws SQLException
+     */
+  private static void createProductTable() throws  SQLException {
     String sqlQuery = "CREATE TABLE IF NOT EXISTS Product\n" + 
                   "(\n" +
                   " id INTEGER PRIMARY KEY NOT NULL,\n" +
@@ -62,12 +68,15 @@ public class DatabaseSetupServices {
     conn.close();
   }
 
-  private static void createUserTable() {
+    /**
+     * @throws SQLException
+     */
+  private static void createUserTable() throws  SQLException {
     String sqlQuery = "CREATE TABLE IF NOT EXISTS User\n" + 
                   "(\n" +
                   " username VARCHAR(30) PRIMARY KEY NOT NULL,\n" +
-                  "name VARCHAR(30) NOT NULL,\n" +
-                  "password VARCHAR(20) NOT NULL,\n" + 
+                  " name VARCHAR(30) NOT NULL,\n" +
+                  " password VARCHAR(20) NOT NULL\n" + 
                   ");";
     
     Connection conn = DataBaseConnServices.getInstance().getConn();
@@ -77,12 +86,15 @@ public class DatabaseSetupServices {
     conn.close();
   }
 
-  private static void createSellTable() {
+    /**
+     * @throws SQLException
+     */
+  private static void createSellTable() throws  SQLException {
     String sqlQuery = "CREATE TABLE IF NOT EXISTS Sell\n" + 
                   "(\n" +
                   " id INTEGER PRIMARY KEY NOT NULL,\n" +
                   " sellDate DATE NOT NULL,\n" +
-                  " clientName VARCHAR(30) NOT NULL,\n" + 
+                  " clientName VARCHAR(30) NOT NULL\n" + 
                   ");";
     
     Connection conn = DataBaseConnServices.getInstance().getConn();
@@ -92,12 +104,15 @@ public class DatabaseSetupServices {
     conn.close();
   }
 
-  private static void createSellProductTable() {
+  private static void createSellProductTable()  throws  SQLException {
     String sqlQuery = "CREATE TABLE IF NOT EXISTS SellProduct\n" + 
                   "(\n" +
-                  " sellId INTEGER PRIMARY KEY NOT NULL,\n" +
+                  " sellId INTEGER NOT NULL,\n" +
                   " productId INTEGER NOT NULL,\n" +
-                  "amount INTEGER NOT NULL,\n" + 
+                  " amount INTEGER NOT NULL,\n" + 
+                  " PRIMARY KEY (sellId, productId),\n" + 
+                  " FOREIGN KEY (sellID) REFERENCES Sell(id),\n" +
+                  " FOREIGN KEY (productID) REFERENCES Product(id)\n" +
                   ");";
     
     Connection conn = DataBaseConnServices.getInstance().getConn();
@@ -107,11 +122,13 @@ public class DatabaseSetupServices {
     conn.close();
   }
 
-  private static void alterSellProductTable() {
+    /**
+     * @throws SQLException
+     */
+  private static void alterSellProductTable() throws  SQLException {
     String sqlQuery = "ALTER TABLE SellProduct\n" + 
-                  "\n" +
-                  "ADD CONSTRAINT SellProduct_sellId FOREIGN KEY sellId REFERENCES Sell (id),\n" +
-                  "ADD CONSTRAINT SellProduct_productId FOREIGN KEY productId REFERENCES Product (id);";
+                  " ADD CONSTRAINT SellProduct_sellId FOREIGN KEY sellId REFERENCES Sell (id),\n" +
+                  "ADD CONSTRAINT SellProduct_productId FOREIGN KEY productId REFERENCES Product (id)\n"+";";
                   
     Connection conn = DataBaseConnServices.getInstance().getConn();
     Statement statement = conn.createStatement();
@@ -119,10 +136,5 @@ public class DatabaseSetupServices {
     statement.close();
     conn.close();
   }
-
-
-
-  
-
 
 }
