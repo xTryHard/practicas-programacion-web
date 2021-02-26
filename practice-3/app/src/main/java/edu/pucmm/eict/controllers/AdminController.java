@@ -4,6 +4,7 @@ package edu.pucmm.eict.controllers;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
+import edu.pucmm.eict.services.UserServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -20,9 +21,12 @@ import java.util.Map;
 public class AdminController extends BaseController{
 
   private ProductServices productServices;
+  private UserServices userServices;
+
   public AdminController(Javalin app) {
     super(app);
     productServices = new ProductServices();
+    userServices = new UserServices();
   }
 
   public void applyRoutes() {
@@ -201,19 +205,33 @@ public class AdminController extends BaseController{
         String username = ctx.formParam("username");
         String password = ctx.formParam("password");
         String name = ctx.formParam("name");
+        User user = new User(username.toLowerCase(), password, name);
 
-        boolean done = ShoppingCartServices.getInstance().createUser(new User(username, password, name));
-
-        if (done) {
-        //Rediret to list
+        if (!userServices.existsUser(username)) {
+    
+          boolean done = userServices.createUser(user);
           HashMap<String, Object> model = new HashMap<>();
-          model.put("code", "201");
-          model.put("codeText", "Usuario creado correctamente");
-          ctx.render("/templates/error.html", model);
+  
+          if (done) {
+          //Rediret to list
+            ShoppingCartServices.getInstance().createUser(user);
+            model.put("code", "201");
+            model.put("codeText", "Usuario creado correctamente");
+            ctx.render("/templates/error.html", model);
+          } else {
+            //Error
+            model.put("code", "400");
+            model.put("codeText", "Oh, no... algo salió mal :(");
+            ctx.render("/templates/error.html", model);
+          }
+
         } else {
-          //Error
-          ctx.redirect("/create-user");
+          HashMap<String, Object> model = new HashMap<>();
+          model.put("code", "409");
+          model.put("codeText", "El usuario ya existe");
+          ctx.render("/templates/error.html", model);
         }
+
       });
 
       });

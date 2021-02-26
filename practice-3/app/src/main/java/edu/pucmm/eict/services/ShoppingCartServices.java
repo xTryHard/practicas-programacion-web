@@ -17,10 +17,12 @@ public class ShoppingCartServices {
   private List<Sell> sells = new ArrayList<Sell>();
   private boolean adminMode = false;
   private ProductServices productServices = new ProductServices();
+  private UserServices userServices = new UserServices();
 
   private ShoppingCartServices() {
-    users.add(new User("admin", "admin", "admin"));
     this.products = productServices.getAllProducts();
+    this.users = userServices.getAllUsers();
+    createDefaultUser();
   }
 
   public static ShoppingCartServices getInstance() {
@@ -32,6 +34,23 @@ public class ShoppingCartServices {
     return instance;
 
   }
+
+  private void createDefaultUser() {
+    
+    if (!userServices.existsUser("admin")) {
+      User user = new User("admin", "admin", "admin");
+      boolean done = userServices.createUser(user);
+  
+      if (done) {
+        users.add(user);
+      } else {
+        //
+      }
+    } else {
+      System.out.println("Usuario existente!");
+    }
+  }
+
 
   public Product getProductById(int id) {
     return this.products.stream().filter(e -> e.getId() == id).findFirst().orElse(null);
@@ -98,7 +117,10 @@ public class ShoppingCartServices {
   }
 
   public boolean validateAdmin(String username, String password){
-    return username.equals(this.users.get(0).getUserName()) && password.equals(this.users.get(0).getPassword());
+    for (User user : users) {
+      if (user.getUserName().equalsIgnoreCase(username) && user.getPassword().equals(password)) return true;
+    }
+    return false;
   }
 
   public boolean getAdminMode() {
