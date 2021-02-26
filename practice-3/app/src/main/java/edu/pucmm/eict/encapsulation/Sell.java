@@ -29,10 +29,13 @@ public class Sell {
 
   }
 
-  public Sell(Date sellDate, String clientName, List<SoldProduct> soldproducts){
+  public Sell(Date sellDate, String clientName, List<SoldProduct> soldproducts, BigDecimal totalPrice){
+    this.id = idCount.incrementAndGet();
     this.sellDate =  sellDate;
     this.clientName = clientName;
     this.soldProducts = soldproducts;
+    this.totalPrice = totalPrice;
+    this.sellDateStr = this.getFormat(sellDate);
   }
 
   public Sell(Date sellDate, String clientName, List<Product> products, List<Integer> amountProductList, List<BigDecimal> productTotalPrice, BigDecimal totalPrice) {

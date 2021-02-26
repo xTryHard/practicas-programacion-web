@@ -114,7 +114,7 @@ public class DatabaseSetupServices {
                   " amount INTEGER NOT NULL,\n" + 
                   " price DECIMAL NOT NULL,\n" +
                   " totalPrice DECIMAL NOT NULL,\n" +
-                  " PRIMARY KEY (sellId),\n" + 
+                  " PRIMARY KEY (sellId, productId),\n" + 
                   " FOREIGN KEY (sellID) REFERENCES Sell(id)\n" +
                   ");";
     

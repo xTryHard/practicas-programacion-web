@@ -217,18 +217,20 @@ public class AdminController extends BaseController{
             ShoppingCartServices.getInstance().createUser(user);
             model.put("code", "201");
             model.put("codeText", "Usuario creado correctamente");
+            model.put("codeHref", "/shop");
             ctx.render("/templates/error.html", model);
           } else {
             //Error
             model.put("code", "400");
-            model.put("codeText", "Oh, no... algo salió mal :(");
+            model.put("codeText", "Oh, no... algo salió mal :(. Inténtalo de nuevo");
+            model.put("codeHref", "/admin/create-user");
             ctx.render("/templates/error.html", model);
           }
 
         } else {
           HashMap<String, Object> model = new HashMap<>();
           model.put("code", "409");
-          model.put("codeText", "El usuario ya existe");
+          model.put("codeText", "El usuario ya existe. Inténtalo de nuevo");
           ctx.render("/templates/error.html", model);
         }
 

@@ -2,6 +2,7 @@
 package edu.pucmm.eict.controllers;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
+import edu.pucmm.eict.encapsulation.SoldProduct;
 import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
@@ -103,15 +105,38 @@ public class GeneralControllers extends BaseController {
 
       String user = ctx.formParam("clientName");
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
-      Sell sell = new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice());
+      // Sell sell = new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice());
 
+      List<Integer> amountList = userShoppingCart.getProductAmountList();
+
+      List<BigDecimal> productTotalPrices = userShoppingCart.getProductTotalPrice();
+      
+      BigDecimal sellTotalPrice = userShoppingCart.getCartTotalPrice();
+
+      List<SoldProduct> soldProducts = new ArrayList<>();
+      int i = 0;
+      for (Product product : userShoppingCart.getProducts()) {
+        SoldProduct soldProduct = new SoldProduct(product.getId(), product.getName(), product.getPrice(), amountList.get(i), productTotalPrices.get(i));
+        soldProducts.add(soldProduct);
+        i++;
+      }
+
+      Sell sell = new Sell(new Date(), user, soldProducts, sellTotalPrice);
       sellServices.createSell(sell);
-      sellServices.createSellProduct(sell, userShoppingCart.getProductAmountList());
+      sellServices.createSellProduct(sell);
       
       ShoppingCartServices.getInstance().addSell(sell);
 
       ctx.req.getSession().invalidate();
-      ctx.redirect("/shop");
+      HashMap<String, Object> model = new HashMap<>();
+      model.put("code", "201");
+      model.put("codeText", "Compra realizada correctamente");
+      model.put("codeHref", "/shop");
+      ctx.render("/templates/error.html", model);
+
+
+
+
       System.out.println("Compra realizada: "+ShoppingCartServices.getInstance().getSells().get(0));
     });
 

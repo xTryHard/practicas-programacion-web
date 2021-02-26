@@ -25,7 +25,7 @@ public class SellServices {
         Connection conn = null;
         try {
 
-            String query = "insert into sell(id, selldate, clientname) values(?,?,?)";
+            String query = "insert into sell(id, selldate, clientname, totalprice) values(?,?,?, ?)";
             conn = DataBaseConnServices.getInstance().getConn();
             //
             PreparedStatement prepareStatement = conn.prepareStatement(query);
@@ -33,7 +33,7 @@ public class SellServices {
             prepareStatement.setInt(1, sell.getId());
             prepareStatement.setDate(2, new java.sql.Date(sell.getSellDate().getTime()));
             prepareStatement.setString(3, sell.getClientName());
-
+            prepareStatement.setBigDecimal(4, sell.getTotalPrice());
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0;
 
