@@ -4,12 +4,8 @@
 // Done
 package edu.pucmm.eict;
 
-import java.math.BigDecimal;
-
 import edu.pucmm.eict.controllers.AdminController;
 import edu.pucmm.eict.controllers.GeneralControllers;
-import edu.pucmm.eict.encapsulation.Product;
-import edu.pucmm.eict.services.ShoppingCartServices;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;

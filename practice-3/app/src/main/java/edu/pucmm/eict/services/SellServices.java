@@ -3,14 +3,12 @@ package edu.pucmm.eict.services;
 
 import java.sql.PreparedStatement;
 
-import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.SoldProduct;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class SellServices {

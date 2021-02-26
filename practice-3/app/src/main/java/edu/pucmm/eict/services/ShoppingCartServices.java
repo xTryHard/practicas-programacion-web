@@ -4,10 +4,9 @@ package edu.pucmm.eict.services;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.encapsulation.Sell;
-import edu.pucmm.eict.encapsulation.ShoppingCart;
+
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 // Main services class. Handles all models and application context data

@@ -125,19 +125,19 @@ public class DatabaseSetupServices {
     conn.close();
   }
 
-    /**
-     * @throws SQLException
-     */
-  private static void alterSellProductTable() throws  SQLException {
-    String sqlQuery = "ALTER TABLE SellProduct\n" + 
-                  " ADD CONSTRAINT SellProduct_sellId FOREIGN KEY sellId REFERENCES Sell (id),\n" +
-                  "ADD CONSTRAINT SellProduct_productId FOREIGN KEY productId REFERENCES Product (id)\n"+";";
+  //   /**
+  //    * @throws SQLException
+  //    */
+  // private static void alterSellProductTable() throws  SQLException {
+  //   String sqlQuery = "ALTER TABLE SellProduct\n" + 
+  //                 " ADD CONSTRAINT SellProduct_sellId FOREIGN KEY sellId REFERENCES Sell (id),\n" +
+  //                 "ADD CONSTRAINT SellProduct_productId FOREIGN KEY productId REFERENCES Product (id)\n"+";";
                   
-    Connection conn = DataBaseConnServices.getInstance().getConn();
-    Statement statement = conn.createStatement();
-    statement.execute(sqlQuery);
-    statement.close();
-    conn.close();
-  }
+  //   Connection conn = DataBaseConnServices.getInstance().getConn();
+  //   Statement statement = conn.createStatement();
+  //   statement.execute(sqlQuery);
+  //   statement.close();
+  //   conn.close();
+  // }
 
 }

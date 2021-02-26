@@ -12,7 +12,6 @@ import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.SoldProduct;
-import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.utils.BaseController;
