@@ -78,6 +78,69 @@ public class ProductServices {
         return products;
     }
 
+    public boolean editProduct(Product product) {
+        boolean ok =false;
+
+        Connection conn = null;
+        try {
+
+            String query = "update product set name = ?, price = ? where id = ?";
+            conn = DataBaseConnServices.getInstance().getConn();
+            //
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setString(1, product.getName());
+            prepareStatement.setBigDecimal(2, product.getPrice());
+            prepareStatement.setInt(3, product.getId());
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
+            }
+        }
+
+        return ok;
+    }
+
+    public boolean deleteProduct(int id){
+        boolean ok =false;
+
+        Connection conn = null;
+        try {
+
+            String query = "delete from product where id = ?";
+            conn = DataBaseConnServices.getInstance().getConn();
+            //
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+
+            //Indica el where...
+            prepareStatement.setInt(1, id);
+            //
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
+            }
+        }
+
+        return ok;
+    }
 
     public int getLastId() {
         String query = "SELECT ID FROM PRODUCT ORDER BY ID DESC LIMIT 1;";

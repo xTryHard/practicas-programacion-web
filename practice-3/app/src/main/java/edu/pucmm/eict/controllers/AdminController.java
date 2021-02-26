@@ -98,8 +98,12 @@ public class AdminController extends BaseController{
         
         if (done) {
         //Rediret to 
-        ShoppingCartServices.getInstance().createProduct(product);
-          ctx.redirect("/admin");
+          ShoppingCartServices.getInstance().createProduct(product);
+          HashMap<String, Object> model = new HashMap<>();
+          model.put("code", "201");
+          model.put("codeText", "Producto creado satisfactoriamente.");
+          model.put("codeHref", "/admin");
+          ctx.render("/templates/error.html", model);
         } else {
           //Error
         }
@@ -133,11 +137,16 @@ public class AdminController extends BaseController{
         productToUpdate.setName(name);
         productToUpdate.setPrice(price);
 
-        boolean done = ShoppingCartServices.getInstance().updateProduct(productToUpdate);
+        boolean done = productServices.editProduct(productToUpdate);
 
         if (done) {
           //Redirect to list
-          ctx.redirect("/admin");
+          ShoppingCartServices.getInstance().updateProduct(productToUpdate);
+          HashMap<String, Object> model = new HashMap<>();
+          model.put("code", "204");
+          model.put("codeText", "Producto actualizado satisfactoriamente.");
+          model.put("codeHref", "/admin");
+          ctx.render("/templates/error.html", model);
         } else {
           //Error
         }  
@@ -148,11 +157,16 @@ public class AdminController extends BaseController{
 
         int id = Integer.parseInt(ctx.pathParam("product-id"));
 
-        boolean done = ShoppingCartServices.getInstance().deleteProduct(id);
+        boolean done = productServices.deleteProduct(id);
 
         if (done) {
           //Redirect list
-          ctx.redirect("/admin");
+          ShoppingCartServices.getInstance().deleteProduct(id);
+          HashMap<String, Object> model = new HashMap<>();
+          model.put("code", "204");
+          model.put("codeText", "Producto eliminado satisfactoriamente.");
+          model.put("codeHref", "/admin");
+          ctx.render("/templates/error.html", model);
         } else {
           //error
         }
