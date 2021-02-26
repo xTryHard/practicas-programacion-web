@@ -94,7 +94,8 @@ public class DatabaseSetupServices {
                   "(\n" +
                   " id INTEGER PRIMARY KEY NOT NULL,\n" +
                   " sellDate DATE NOT NULL,\n" +
-                  " clientName VARCHAR(30) NOT NULL\n" + 
+                  " clientName VARCHAR(30) NOT NULL,\n" + 
+                  " totalPrice DECIMAL NOT NULL\n" +
                   ");";
     
     Connection conn = DataBaseConnServices.getInstance().getConn();
@@ -109,10 +110,12 @@ public class DatabaseSetupServices {
                   "(\n" +
                   " sellId INTEGER NOT NULL,\n" +
                   " productId INTEGER NOT NULL,\n" +
+                  " productName VARCHAR(60) NOT NULL,\n" +
                   " amount INTEGER NOT NULL,\n" + 
-                  " PRIMARY KEY (sellId, productId),\n" + 
-                  " FOREIGN KEY (sellID) REFERENCES Sell(id),\n" +
-                  " FOREIGN KEY (productID) REFERENCES Product(id)\n" +
+                  " price DECIMAL NOT NULL,\n" +
+                  " totalPrice DECIMAL NOT NULL,\n" +
+                  " PRIMARY KEY (sellId),\n" + 
+                  " FOREIGN KEY (sellID) REFERENCES Sell(id)\n" +
                   ");";
     
     Connection conn = DataBaseConnServices.getInstance().getConn();

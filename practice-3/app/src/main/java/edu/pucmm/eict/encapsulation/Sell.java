@@ -23,10 +23,16 @@ public class Sell {
   private Object[] productTotalPrice;
   private BigDecimal totalPrice;
   private String sellDateStr;
-   
+  private List<SoldProduct> soldProducts;
 
   public Sell() {
 
+  }
+
+  public Sell(Date sellDate, String clientName, List<SoldProduct> soldproducts){
+    this.sellDate =  sellDate;
+    this.clientName = clientName;
+    this.soldProducts = soldproducts;
   }
 
   public Sell(Date sellDate, String clientName, List<Product> products, List<Integer> amountProductList, List<BigDecimal> productTotalPrice, BigDecimal totalPrice) {
@@ -70,8 +76,21 @@ public class Sell {
     this.clientName = clientName;
   }
 
+
+  public void setTotalPrice(BigDecimal totalPrice) {
+    this.totalPrice = totalPrice;
+  } 
+  
   public List<Product> getProducts() {
     return this.products;
+  }
+
+  public void setSoldProducts(List<SoldProduct> soldProducts) {
+    this.soldProducts = soldProducts;
+  }
+
+  public List<SoldProduct> getSoldProducts() {
+    return this.soldProducts;
   }
 
   public void setProducts(ArrayList<Product> products) {

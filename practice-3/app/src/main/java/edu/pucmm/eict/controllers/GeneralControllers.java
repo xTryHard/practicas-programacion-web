@@ -104,8 +104,10 @@ public class GeneralControllers extends BaseController {
       String user = ctx.formParam("clientName");
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
       Sell sell = new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice());
+
       sellServices.createSell(sell);
       sellServices.createSellProduct(sell, userShoppingCart.getProductAmountList());
+      
       ShoppingCartServices.getInstance().addSell(sell);
 
       ctx.req.getSession().invalidate();

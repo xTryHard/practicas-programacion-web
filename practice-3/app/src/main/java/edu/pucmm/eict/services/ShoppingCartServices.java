@@ -4,8 +4,10 @@ package edu.pucmm.eict.services;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.encapsulation.Sell;
+import edu.pucmm.eict.encapsulation.ShoppingCart;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // Main services class. Handles all models and application context data
@@ -18,10 +20,13 @@ public class ShoppingCartServices {
   private boolean adminMode = false;
   private ProductServices productServices = new ProductServices();
   private UserServices userServices = new UserServices();
+  private SellServices sellServices = new SellServices();
 
   private ShoppingCartServices() {
     this.products = productServices.getAllProducts();
     this.users = userServices.getAllUsers();
+    this.sells = sellServices.getAllSells();
+    this.setSellProducts();
     createDefaultUser();
   }
 
@@ -48,6 +53,16 @@ public class ShoppingCartServices {
       }
     } else {
       System.out.println("Usuario existente!");
+    }
+  }
+
+  private void setSellProducts() {
+
+    for (Sell sell : this.sells) {
+    
+      sell.setSoldProducts(sellServices.getSellProducts(sell));
+
+      // ShoppingCart shoppingCart = new Shopp
     }
   }
 
