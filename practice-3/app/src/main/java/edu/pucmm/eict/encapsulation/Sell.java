@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.pucmm.eict.services.SellServices;
+
 
 public class Sell {
 
-  private static final AtomicInteger idCount= new AtomicInteger(0);
+  private static final AtomicInteger idCount= new AtomicInteger(setAtomic());
   private int id;
   private Date sellDate;
   private String clientName;
@@ -21,6 +23,8 @@ public class Sell {
   private Object[] productTotalPrice;
   private BigDecimal totalPrice;
   private String sellDateStr;
+   
+
   public Sell() {
 
   }
@@ -35,6 +39,11 @@ public class Sell {
     this.productTotalPrice = productTotalPrice.toArray();
     this.totalPrice = totalPrice;
     this.sellDateStr = this.getFormat(sellDate);
+  }
+
+  private static int setAtomic() {
+    SellServices sellServices = new SellServices();
+    return sellServices.getLastId();
   }
 
   public int getId() {

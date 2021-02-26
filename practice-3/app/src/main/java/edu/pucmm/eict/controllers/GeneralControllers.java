@@ -11,6 +11,7 @@ import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.User;
+import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
@@ -18,8 +19,10 @@ import io.javalin.Javalin;
 public class GeneralControllers extends BaseController {
 
   private String adminMode = "";
+  private SellServices sellServices;
   public GeneralControllers(Javalin app) {
     super(app);
+    sellServices = new SellServices();
   }
 
   public void applyRoutes() {
@@ -100,8 +103,10 @@ public class GeneralControllers extends BaseController {
 
       String user = ctx.formParam("clientName");
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
-
-      ShoppingCartServices.getInstance().addSell(new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice()));
+      Sell sell = new Sell(new Date(), user,userShoppingCart.getProducts(), userShoppingCart.getProductAmountList(), userShoppingCart.getProductTotalPrice(), userShoppingCart.getCartTotalPrice());
+      sellServices.createSell(sell);
+      sellServices.createSellProduct(sell, userShoppingCart.getProductAmountList());
+      ShoppingCartServices.getInstance().addSell(sell);
 
       ctx.req.getSession().invalidate();
       ctx.redirect("/shop");

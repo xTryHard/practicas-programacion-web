@@ -10,41 +10,41 @@ import java.util.List;
 
 public class UserServices {
 
-  public UserServices() {
+    public UserServices() {
 
-  }
+    }
 
-  public boolean createUser(User user) {
-    boolean ok =false;
+    public boolean createUser(User user) {
+        boolean ok = false;
 
-    Connection conn = null;
-    try {
-
-        String query = "insert into user(username, name, password) values(?,?,?)";
-        conn = DataBaseConnServices.getInstance().getConn();
-        //
-        PreparedStatement prepareStatement = conn.prepareStatement(query);
-        //Antes de ejecutar seteo los parametros.
-        prepareStatement.setString(1, user.getUserName());
-        prepareStatement.setString(2, user.getName());
-        prepareStatement.setString(3, user.getPassword());
-        int fila = prepareStatement.executeUpdate();
-        ok = fila > 0 ;
-
-    } catch (SQLException ex) {
-        // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
-        System.out.println(ex.toString());
-    } finally{
+        Connection conn = null;
         try {
-            conn.close();
+
+            String query = "insert into user(username, name, password) values(?,?,?)";
+            conn = DataBaseConnServices.getInstance().getConn();
+            //
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setString(1, user.getUserName());
+            prepareStatement.setString(2, user.getName());
+            prepareStatement.setString(3, user.getPassword());
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
         } catch (SQLException ex) {
             // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.toString());
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
+            }
         }
-    }
 
-    return ok;
-  }
+        return ok;
+    }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();

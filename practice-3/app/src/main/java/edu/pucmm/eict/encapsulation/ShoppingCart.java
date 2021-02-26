@@ -56,6 +56,7 @@ public class ShoppingCart {
     this.products.clear();
     this.productAmount.clear();
   }
+  
   public void addProduct(Product product, int amount) {
 
     if (isInShoppingCart(product)) {
