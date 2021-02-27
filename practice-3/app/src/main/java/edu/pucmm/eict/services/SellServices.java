@@ -108,6 +108,7 @@ public class SellServices {
                 sell.setClientName(rs.getString("clientname"));
                 sell.setTotalPrice(rs.getBigDecimal("totalprice"));
                 sells.add(sell);
+                System.out.println(new Date(rs.getDate("selldate").getTime()));
             }
 
         } catch (SQLException ex) {

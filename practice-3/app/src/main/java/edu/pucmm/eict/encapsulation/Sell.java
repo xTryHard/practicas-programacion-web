@@ -68,7 +68,7 @@ public class Sell {
   }
 
   public void setSellDate(Date sellDate) {
-    this.sellDate = sellDate;
+    this.sellDateStr = this.getFormat(sellDate);
   }
 
   public String getClientName() {
