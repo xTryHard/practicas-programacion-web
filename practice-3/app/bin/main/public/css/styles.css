@@ -154,3 +154,7 @@ th, td {
   padding: 8px 16px; 
 }
 
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+  background-color: #5bc0de !important;
+}
+

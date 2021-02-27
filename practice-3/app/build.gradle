@@ -36,6 +36,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     implementation 'com.h2database:h2:1.4.200'
 
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt
+    implementation group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+
 
 }
 

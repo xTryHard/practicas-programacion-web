@@ -27,12 +27,12 @@
             </tr>
           </thead>
           <tbody class="bg-tbody">
-            <tr th:each="product,iter : ${sell.products}">
-              <td style="width: 25%" th:text="${product.name}"></td>
-              <td style="width: 25%" th:text="${product.price}"></td>
-              <td style="width: 16.66%" th:text="${sell.amountProductList[__${iter.index}__]}">
+            <tr th:each="soldProduct: ${sell.soldProducts}">
+              <td style="width: 25%" th:text="${soldProduct.name}"></td>
+              <td style="width: 25%" th:text="${soldProduct.price}"></td>
+              <td style="width: 16.66%" th:text="${soldProduct.amount}">
               </td>
-              <td style="width: 16.66%" th:text="${sell.productTotalPrice[__${iter.index}__]}"></td>
+              <td style="width: 16.66%" th:text="${soldProduct.totalPrice}"></td>
             </tr>
             <tr>
               <td style="visibility: hidden;"></td>
