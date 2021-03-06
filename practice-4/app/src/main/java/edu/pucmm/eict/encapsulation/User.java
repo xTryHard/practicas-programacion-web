@@ -1,8 +1,14 @@
 
 package edu.pucmm.eict.encapsulation;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "USERS")
 public class User {
   
+  @Id
   private String username;
   private String password;
   private String name;

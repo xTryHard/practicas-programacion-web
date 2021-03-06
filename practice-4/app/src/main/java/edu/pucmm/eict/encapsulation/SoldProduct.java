@@ -2,9 +2,15 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
+import java.io.Serializable;
+import javax.persistence.*;
 
-public class SoldProduct extends Product {
+@Entity
+@Table(name = "SOLDPRODUCTS")
+public class SoldProduct extends Product implements Serializable{
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int amount;
   private BigDecimal totalPrice;
 

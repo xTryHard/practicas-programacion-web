@@ -6,10 +6,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.pucmm.eict.services.ProductServices;
 
+import java.io.Serializable;
+import javax.persistence.*;
 
-public class Product {
 
-  private static AtomicInteger idCount = new AtomicInteger(setAtomic());
+@Entity
+@Table(name = "PRODUCTS")
+public class Product implements Serializable {
+
+  // private static AtomicInteger idCount = new AtomicInteger(setAtomic());
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
   private BigDecimal price;
@@ -19,7 +26,7 @@ public class Product {
   }
 
   public Product(String name, BigDecimal price) {
-    this.id = idCount.incrementAndGet();
+    // this.id = idCount.incrementAndGet();
     this.name = name;
     this.price = price;
   }

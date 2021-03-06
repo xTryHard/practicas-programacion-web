@@ -10,27 +10,47 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.pucmm.eict.services.SellServices;
 
+import java.io.Serializable;
+import javax.persistence.*;
 
-public class Sell {
+@Entity
+@Table(name = "SELLS")
+public class Sell implements Serializable{
 
-  private static final AtomicInteger idCount= new AtomicInteger(setAtomic());
+  // private static final AtomicInteger idCount= new AtomicInteger(setAtomic());
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private Date sellDate;
   private String clientName;
-  private List<Product> products; 
-  private Object[] productsObject;
-  private Object[] amountProductList;
-  private Object[] productTotalPrice;
-  private BigDecimal totalPrice;
-  private String sellDateStr;
+
+  @ManyToMany
   private List<SoldProduct> soldProducts;
+
+  @Transient
+  private String sellDateStr;
+
+  @Transient
+  private List<Product> products; 
+
+  @Transient
+  private Object[] productsObject;
+
+  @Transient
+  private Object[] amountProductList;
+
+  @Transient
+  private Object[] productTotalPrice;
+
+  @Transient
+  private BigDecimal totalPrice;
 
   public Sell() {
 
   }
 
   public Sell(Date sellDate, String clientName, List<SoldProduct> soldproducts, BigDecimal totalPrice){
-    this.id = idCount.incrementAndGet();
+    // this.id = idCount.incrementAndGet();
     this.sellDate =  sellDate;
     this.clientName = clientName;
     this.soldProducts = soldproducts;
@@ -39,7 +59,7 @@ public class Sell {
   }
 
   public Sell(Date sellDate, String clientName, List<Product> products, List<Integer> amountProductList, List<BigDecimal> productTotalPrice, BigDecimal totalPrice) {
-    this.id = idCount.incrementAndGet();
+    // this.id = idCount.incrementAndGet();
     this.sellDate = sellDate;
     this.clientName = clientName;
     this.products = products;

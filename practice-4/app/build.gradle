@@ -6,10 +6,15 @@
  * User Manual available at https://docs.gradle.org/6.8/userguide/building_java_projects.html
  */
 
-plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
-}
+// plugins {
+//     // Apply the application plugin to add support for building a CLI application in Java.
+//     id 'application'
+// }
+
+apply plugin: "application"
+apply plugin: "java"
+
+mainClassName = "edu.pucmm.eict.App"
 
 repositories {
     // Use JCenter for resolving dependencies.
@@ -44,7 +49,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-entitymanager:5.4.17.Final'
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'edu.pucmm.eict.App'
-}
+// application {
+//     // Define the main class for the application.
+//     mainClassName = 'edu.pucmm.eict.App'
+// }
