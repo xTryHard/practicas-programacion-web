@@ -24,13 +24,14 @@ public class App {
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
 
         DatabaseSetupServices.startDb();
-        DataBaseConnServices.getInstance().testConn();
-        DatabaseSetupServices.createTables();
+        // DataBaseConnServices.getInstance().testConn();
+        // DatabaseSetupServices.createTables();
 
         // ShoppingCartServices.getInstance().createProduct(new Product("Monitor DELL", new BigDecimal(8000)));
         // ShoppingCartServices.getInstance().createProduct(new Product("4GB RAM DDR4", new BigDecimal(4000)));
-        ProductServices productServices = new ProductServices();
-        System.out.println(productServices.getLastId());
+
+        // ProductServices productServices = new ProductServices();
+        // System.out.println(productServices.getLastId());
 
         new AdminController(app).applyRoutes();
         new GeneralControllers(app).applyRoutes();

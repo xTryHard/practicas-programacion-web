@@ -21,7 +21,6 @@ public class DatabaseSetupServices {
     }
     return instance;
   }
-
     /**
      *
     //  * @throws SQLException
@@ -41,91 +40,91 @@ public class DatabaseSetupServices {
         server.shutdown();
     }
 
-        /**
-     * Metodo para recrear las tablas necesarios
-     * @throws SQLException
-     */
-    public static void createTables() throws  SQLException{
+  //       /**
+  //    * Metodo para recrear las tablas necesarios
+  //    * @throws SQLException
+  //    */
+  //   public static void createTables() throws  SQLException{
 
-      createProductTable();
-      createSellTable();
-      createUserTable();
-      createSellProductTable();
-      // alterSellProductTable();
-  } 
-    /**
-     * @throws SQLException
-     */
-  private static void createProductTable() throws  SQLException {
-    String sqlQuery = "CREATE TABLE IF NOT EXISTS Product\n" + 
-                  "(\n" +
-                  " id INTEGER PRIMARY KEY NOT NULL,\n" +
-                  "name VARCHAR(60) NOT NULL,\n" +
-                  "price DECIMAL NOT NULL\n" + 
-                  ");";
+  //     createProductTable();
+  //     createSellTable();
+  //     createUserTable();
+  //     createSellProductTable();
+  //     // alterSellProductTable();
+  // } 
+  //   /**
+  //    * @throws SQLException
+  //    */
+  // private static void createProductTable() throws  SQLException {
+  //   String sqlQuery = "CREATE TABLE IF NOT EXISTS Product\n" + 
+  //                 "(\n" +
+  //                 " id INTEGER PRIMARY KEY NOT NULL,\n" +
+  //                 "name VARCHAR(60) NOT NULL,\n" +
+  //                 "price DECIMAL NOT NULL\n" + 
+  //                 ");";
     
-    Connection conn = DataBaseConnServices.getInstance().getConn();
-    Statement statement = conn.createStatement();
-    statement.execute(sqlQuery);
-    statement.close();
-    conn.close();
-  }
+  //   Connection conn = DataBaseConnServices.getInstance().getConn();
+  //   Statement statement = conn.createStatement();
+  //   statement.execute(sqlQuery);
+  //   statement.close();
+  //   conn.close();
+  // }
 
-    /**
-     * @throws SQLException
-     */
-  private static void createUserTable() throws  SQLException {
-    String sqlQuery = "CREATE TABLE IF NOT EXISTS User\n" + 
-                  "(\n" +
-                  " username VARCHAR(30) PRIMARY KEY NOT NULL,\n" +
-                  " name VARCHAR(30) NOT NULL,\n" +
-                  " password VARCHAR(20) NOT NULL\n" + 
-                  ");";
+  //   /**
+  //    * @throws SQLException
+  //    */
+  // private static void createUserTable() throws  SQLException {
+  //   String sqlQuery = "CREATE TABLE IF NOT EXISTS User\n" + 
+  //                 "(\n" +
+  //                 " username VARCHAR(30) PRIMARY KEY NOT NULL,\n" +
+  //                 " name VARCHAR(30) NOT NULL,\n" +
+  //                 " password VARCHAR(20) NOT NULL\n" + 
+  //                 ");";
     
-    Connection conn = DataBaseConnServices.getInstance().getConn();
-    Statement statement = conn.createStatement();
-    statement.execute(sqlQuery);
-    statement.close();
-    conn.close();
-  }
+  //   Connection conn = DataBaseConnServices.getInstance().getConn();
+  //   Statement statement = conn.createStatement();
+  //   statement.execute(sqlQuery);
+  //   statement.close();
+  //   conn.close();
+  // }
 
-    /**
-     * @throws SQLException
-     */
-  private static void createSellTable() throws  SQLException {
-    String sqlQuery = "CREATE TABLE IF NOT EXISTS Sell\n" + 
-                  "(\n" +
-                  " id INTEGER PRIMARY KEY NOT NULL,\n" +
-                  " sellDate DATE NOT NULL,\n" +
-                  " clientName VARCHAR(30) NOT NULL,\n" + 
-                  " totalPrice DECIMAL NOT NULL\n" +
-                  ");";
+  //   /**
+  //    * @throws SQLException
+  //    */
+  // private static void createSellTable() throws  SQLException {
+  //   String sqlQuery = "CREATE TABLE IF NOT EXISTS Sell\n" + 
+  //                 "(\n" +
+  //                 " id INTEGER PRIMARY KEY NOT NULL,\n" +
+  //                 " sellDate DATE NOT NULL,\n" +
+  //                 " clientName VARCHAR(30) NOT NULL,\n" + 
+  //                 " totalPrice DECIMAL NOT NULL\n" +
+  //                 ");";
     
-    Connection conn = DataBaseConnServices.getInstance().getConn();
-    Statement statement = conn.createStatement();
-    statement.execute(sqlQuery);
-    statement.close();
-    conn.close();
-  }
+  //   Connection conn = DataBaseConnServices.getInstance().getConn();
+  //   Statement statement = conn.createStatement();
+  //   statement.execute(sqlQuery);
+  //   statement.close();
+  //   conn.close();
+  // }
 
-  private static void createSellProductTable()  throws  SQLException {
-    String sqlQuery = "CREATE TABLE IF NOT EXISTS SellProduct\n" + 
-                  "(\n" +
-                  " sellId INTEGER NOT NULL,\n" +
-                  " productId INTEGER NOT NULL,\n" +
-                  " productName VARCHAR(60) NOT NULL,\n" +
-                  " amount INTEGER NOT NULL,\n" + 
-                  " price DECIMAL NOT NULL,\n" +
-                  " totalPrice DECIMAL NOT NULL,\n" +
-                  " PRIMARY KEY (sellId, productId),\n" + 
-                  " FOREIGN KEY (sellID) REFERENCES Sell(id)\n" +
-                  ");";
+  // private static void createSellProductTable()  throws  SQLException {
+  //   String sqlQuery = "CREATE TABLE IF NOT EXISTS SellProduct\n" + 
+  //                 "(\n" +
+  //                 " sellId INTEGER NOT NULL,\n" +
+  //                 " productId INTEGER NOT NULL,\n" +
+  //                 " productName VARCHAR(60) NOT NULL,\n" +
+  //                 " amount INTEGER NOT NULL,\n" + 
+  //                 " price DECIMAL NOT NULL,\n" +
+  //                 " totalPrice DECIMAL NOT NULL,\n" +
+  //                 " PRIMARY KEY (sellId, productId),\n" + 
+  //                 " FOREIGN KEY (sellID) REFERENCES Sell(id)\n" +
+  //                 ");";
     
-    Connection conn = DataBaseConnServices.getInstance().getConn();
-    Statement statement = conn.createStatement();
-    statement.execute(sqlQuery);
-    statement.close();
-    conn.close();
-  }
+  //   Connection conn = DataBaseConnServices.getInstance().getConn();
+  //   Statement statement = conn.createStatement();
+  //   statement.execute(sqlQuery);
+  //   statement.close();
+  //   conn.close();
+  // }
 
 }
