@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
   
   @Id
   private String username;

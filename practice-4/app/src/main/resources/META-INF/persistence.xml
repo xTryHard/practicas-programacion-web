@@ -3,14 +3,14 @@
             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
             version="2.1">
-    <persistence-unit name="MiUnidadPersistencia" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="MyPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>Completar</class>
-        <class>Completar</class>
-        <class>Completar</class>
-        <class>Completar</class>
+        <class>edu.pucmm.eict.encapsulation.Product</class>
+        <class>edu.pucmm.eict.encapsulation.Sell</class>
+        <class>edu.pucmm.eict.encapsulation.SoldProduct</class>
+        <class>edu.pucmm.eict.encapsulation.User</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ormjpa" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/dbpractice4" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />

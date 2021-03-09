@@ -2,9 +2,9 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
-import java.util.concurrent.atomic.AtomicInteger;
+// import java.util.concurrent.atomic.AtomicInteger;
 
-import edu.pucmm.eict.services.ProductServices;
+// import edu.pucmm.eict.services.ProductServices;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "PRODUCTS")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Product implements Serializable {
 
   // private static AtomicInteger idCount = new AtomicInteger(setAtomic());
@@ -31,10 +32,10 @@ public class Product implements Serializable {
     this.price = price;
   }
 
-  private static int setAtomic() {
-    ProductServices pServices = new ProductServices();
-    return pServices.getLastId();
-  }
+  // private static int setAtomic() {
+  //   ProductServices pServices = new ProductServices();
+  //   return pServices.getLastId();
+  // }
 
   public int getId() {
     return this.id;

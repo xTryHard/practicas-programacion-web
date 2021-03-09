@@ -46,19 +46,7 @@ public class DatabaseSetupServices {
      * @throws SQLException
      */
     public static void createTables() throws  SQLException{
-      // String sql = "CREATE TABLE IF NOT EXISTS ESTUDIANTE\n" +
-      //         "(\n" +
-      //         "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
-      //         "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-      //         "  APELLIDO VARCHAR(100) NOT NULL,\n" +
-      //         "  TELEFONO VARCHAR(25) NOT NULL,\n" +
-      //         "  CARRERA VARCHAR(50) NOT NULL\n" +
-      //         ");";
-      // Connection con = DataBaseServices.getInstancia().getConexion();
-      // Statement statement = con.createStatement();
-      // statement.execute(sql);
-      // statement.close();
-      // con.close();
+
       createProductTable();
       createSellTable();
       createUserTable();
@@ -139,20 +127,5 @@ public class DatabaseSetupServices {
     statement.close();
     conn.close();
   }
-
-  //   /**
-  //    * @throws SQLException
-  //    */
-  // private static void alterSellProductTable() throws  SQLException {
-  //   String sqlQuery = "ALTER TABLE SellProduct\n" + 
-  //                 " ADD CONSTRAINT SellProduct_sellId FOREIGN KEY sellId REFERENCES Sell (id),\n" +
-  //                 "ADD CONSTRAINT SellProduct_productId FOREIGN KEY productId REFERENCES Product (id)\n"+";";
-                  
-  //   Connection conn = DataBaseConnServices.getInstance().getConn();
-  //   Statement statement = conn.createStatement();
-  //   statement.execute(sqlQuery);
-  //   statement.close();
-  //   conn.close();
-  // }
 
 }
