@@ -175,6 +175,10 @@ public class AdminController extends BaseController{
       get("/sells", ctx -> {
 
         List<Sell> sells = SellServices.getInstance().findAll();
+        
+        for (Sell sell : sells) {
+          sell.getSoldProducts();
+        }
         //Return sell;
         Map<String, Object> model = new HashMap<String, Object>();
       

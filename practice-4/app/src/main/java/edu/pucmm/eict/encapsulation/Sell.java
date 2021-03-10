@@ -25,7 +25,7 @@ public class Sell implements Serializable{
   private Date sellDate;
   private String clientName;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.EAGER)
   private List<SoldProduct> soldProducts;
 
   @Transient
