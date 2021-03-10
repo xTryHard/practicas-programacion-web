@@ -14,6 +14,8 @@ import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.SoldProduct;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
+import edu.pucmm.eict.services.UserServices;
+import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
 
@@ -229,6 +231,7 @@ public class GeneralControllers extends BaseController {
     });
 
     app.get("/shop", ctx -> {
+      ShoppingCartServices.getInstance().setProducts(ProductServices.getInstance().findAll());
       List<Product> products = ShoppingCartServices.getInstance().getProducts();
       // Inject products to template
       Map<String, Object> model = new HashMap<String, Object>();

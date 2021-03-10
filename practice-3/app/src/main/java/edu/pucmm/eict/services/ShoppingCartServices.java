@@ -63,7 +63,6 @@ public class ShoppingCartServices {
     
       sell.setSoldProducts(sellServices.getSellProducts(sell));
 
-      // ShoppingCart shoppingCart = new Shopp
     }
   }
 

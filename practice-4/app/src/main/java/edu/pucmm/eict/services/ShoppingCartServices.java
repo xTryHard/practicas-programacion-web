@@ -17,17 +17,17 @@ public class ShoppingCartServices {
   private List<Product> products = new ArrayList<Product>();
   private List<Sell> sells = new ArrayList<Sell>();
   private boolean adminMode = false;
-  private ProductServices productServices = new ProductServices();
-  private UserServices userServices = new UserServices();
-  private SellServices sellServices = new SellServices();
+  // private ProductServices productServices = new ProductServices();
+  // private UserServices userServices = new UserServices();
+  // private SellServices sellServices = new SellServices();
 
   private ShoppingCartServices() {
 
     //Arreglar esto y que solo cargue cuando 
-    this.products = productServices.getAllProducts();
-    this.users = userServices.getAllUsers();
-    this.sells = sellServices.getAllSells();
-    this.setSellProducts();
+    // this.products = productServices.getAllProducts();
+    // this.users = userServices.getAllUsers();
+    // this.sells = sellServices.getAllSells();
+    // this.setSellProducts();
     createDefaultUser();
   }
 
@@ -43,30 +43,18 @@ public class ShoppingCartServices {
 
   private void createDefaultUser() {
     
-    if (!userServices.existsUser("admin")) {
+    if (UserServices.getInstance().find("admin") == null) {
       User user = new User("admin", "admin", "admin");
-      boolean done = userServices.createUser(user);
+      User done = UserServices.getInstance().create(user);
   
-      if (done) {
+      if (done != null) {
         users.add(user);
       } else {
-        //
       }
     } else {
       System.out.println("Usuario existente!");
     }
   }
-
-  private void setSellProducts() {
-
-    for (Sell sell : this.sells) {
-    
-      sell.setSoldProducts(sellServices.getSellProducts(sell));
-
-      // ShoppingCart shoppingCart = new Shopp
-    }
-  }
-
 
   public Product getProductById(int id) {
     return this.products.stream().filter(e -> e.getId() == id).findFirst().orElse(null);
@@ -101,6 +89,10 @@ public class ShoppingCartServices {
     return this.products;
   }
 
+  public void setProducts(List<Product> products) {
+    this.products = products;
+  }
+  
   //Returns true if product was found and updated; false if for some reason the product was not found
   public boolean updateProduct(Product product) {
 

@@ -6,13 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+// import java.util.concurrent.atomic.AtomicInteger;
 
-import edu.pucmm.eict.services.SellServices;
+// import edu.pucmm.eict.services.SellServices;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SELLS")
 public class Sell implements Serializable{
@@ -70,10 +71,10 @@ public class Sell implements Serializable{
     this.sellDateStr = this.getFormat(sellDate);
   }
 
-  private static int setAtomic() {
-    SellServices sellServices = new SellServices();
-    return sellServices.getLastId();
-  }
+  // private static int setAtomic() {
+  //   SellServices sellServices = new SellServices();
+  //   return sellServices.getLastId();
+  // }
 
   public int getId() {
     return this.id;

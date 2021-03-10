@@ -20,13 +20,8 @@ import java.util.Map;
 
 public class AdminController extends BaseController{
 
-  private ProductServices productServices;
-  private UserServices userServices;
-
   public AdminController(Javalin app) {
     super(app);
-    productServices = new ProductServices();
-    userServices = new UserServices();
   }
 
   public void applyRoutes() {
@@ -65,6 +60,7 @@ public class AdminController extends BaseController{
 
 
       get("/", ctx ->{
+        ShoppingCartServices.getInstance().setProducts(ProductServices.getInstance().findAll());
         List<Product> products = ShoppingCartServices.getInstance().getProducts();
         HashMap<String, Object> model = new HashMap<>();
         model.put("products", products);
@@ -98,11 +94,11 @@ public class AdminController extends BaseController{
         String name = ctx.formParam("productName");
         BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
         Product product = new Product(name, price);
-        boolean done = productServices.createProduct(product);
+        Product done = ProductServices.getInstance().create(product);
         
-        if (done) {
+        if (done != null) {
         //Rediret to 
-          ShoppingCartServices.getInstance().createProduct(product);
+          // ShoppingCartServices.getInstance().createProduct(product);
           HashMap<String, Object> model = new HashMap<>();
           model.put("code", "201");
           model.put("codeText", "Producto creado satisfactoriamente.");
@@ -141,11 +137,10 @@ public class AdminController extends BaseController{
         productToUpdate.setName(name);
         productToUpdate.setPrice(price);
 
-        boolean done = productServices.editProduct(productToUpdate);
+        Product done = ProductServices.getInstance().update(productToUpdate);
 
-        if (done) {
+        if (done != null) {
           //Redirect to list
-          ShoppingCartServices.getInstance().updateProduct(productToUpdate);
           HashMap<String, Object> model = new HashMap<>();
           model.put("code", "204");
           model.put("codeText", "Producto actualizado satisfactoriamente.");
@@ -161,11 +156,10 @@ public class AdminController extends BaseController{
 
         int id = Integer.parseInt(ctx.pathParam("product-id"));
 
-        boolean done = productServices.deleteProduct(id);
+        boolean done = ProductServices.getInstance().delete(id);
 
         if (done) {
           //Redirect list
-          ShoppingCartServices.getInstance().deleteProduct(id);
           HashMap<String, Object> model = new HashMap<>();
           model.put("code", "204");
           model.put("codeText", "Producto eliminado satisfactoriamente.");
@@ -207,12 +201,12 @@ public class AdminController extends BaseController{
         String name = ctx.formParam("name");
         User user = new User(username.toLowerCase(), password, name);
 
-        if (!userServices.existsUser(username)) {
+        if (UserServices.getInstance().find(username) == null) {
     
-          boolean done = userServices.createUser(user);
+          User done = UserServices.getInstance().create(user);
           HashMap<String, Object> model = new HashMap<>();
   
-          if (done) {
+          if (done != null) {
           //Rediret to list
             ShoppingCartServices.getInstance().createUser(user);
             model.put("code", "201");

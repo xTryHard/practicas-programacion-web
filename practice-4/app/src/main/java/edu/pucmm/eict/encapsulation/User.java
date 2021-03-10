@@ -4,6 +4,7 @@ package edu.pucmm.eict.encapsulation;
 import java.io.Serializable;
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {

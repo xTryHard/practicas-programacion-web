@@ -10,9 +10,8 @@ import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 import edu.pucmm.eict.services.DatabaseSetupServices;
-import edu.pucmm.eict.services.ProductServices;
-import edu.pucmm.eict.services.DataBaseConnServices;
 import java.sql.SQLException;
+import edu.pucmm.eict.services.ShoppingCartServices;
 
 public class App {
 
@@ -35,5 +34,6 @@ public class App {
 
         new AdminController(app).applyRoutes();
         new GeneralControllers(app).applyRoutes();
+        ShoppingCartServices.getInstance();
     }
 }

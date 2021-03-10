@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 import java.io.Serializable;
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SOLDPRODUCTS")
-public class SoldProduct extends Product implements Serializable{
+public class SoldProduct extends Product {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  // @Id
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int amount;
   private BigDecimal totalPrice;
 

@@ -1,8 +1,6 @@
 package edu.pucmm.eict.services;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import org.h2.tools.Server;
 
 public class DatabaseSetupServices {
