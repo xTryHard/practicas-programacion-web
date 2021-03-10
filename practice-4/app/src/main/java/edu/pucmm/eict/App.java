@@ -34,6 +34,5 @@ public class App {
 
         new AdminController(app).applyRoutes();
         new GeneralControllers(app).applyRoutes();
-        ShoppingCartServices.getInstance();
     }
 }

@@ -2,7 +2,6 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
-import java.io.Serializable;
 import javax.persistence.*;
 
 @SuppressWarnings("serial")

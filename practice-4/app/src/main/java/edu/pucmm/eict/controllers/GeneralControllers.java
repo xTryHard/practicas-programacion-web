@@ -14,6 +14,7 @@ import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.SoldProduct;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
+import edu.pucmm.eict.services.SoldProductServices;
 import edu.pucmm.eict.services.UserServices;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.utils.BaseController;
@@ -25,12 +26,10 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 public class GeneralControllers extends BaseController {
 
   private String adminMode = "";
-  private SellServices sellServices;
   StrongPasswordEncryptor passwordEncryptor;
 
   public GeneralControllers(Javalin app) {
     super(app);
-    sellServices = new SellServices();
     passwordEncryptor = new StrongPasswordEncryptor();
   }
 
@@ -130,10 +129,6 @@ public class GeneralControllers extends BaseController {
 
       String user = ctx.formParam("clientName");
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
-      // Sell sell = new Sell(new Date(), user,userShoppingCart.getProducts(),
-      // userShoppingCart.getProductAmountList(),
-      // userShoppingCart.getProductTotalPrice(),
-      // userShoppingCart.getCartTotalPrice());
 
       List<Integer> amountList = userShoppingCart.getProductAmountList();
 
@@ -147,14 +142,12 @@ public class GeneralControllers extends BaseController {
         SoldProduct soldProduct = new SoldProduct(product.getId(), product.getName(), product.getPrice(),
             amountList.get(i), productTotalPrices.get(i));
         soldProducts.add(soldProduct);
+        SoldProductServices.getInstance().create(soldProduct);
         i++;
       }
 
       Sell sell = new Sell(new Date(), user, soldProducts, sellTotalPrice);
-      sellServices.createSell(sell);
-      sellServices.createSellProduct(sell);
-
-      ShoppingCartServices.getInstance().addSell(sell);
+      SellServices.getInstance().create(sell);
 
       ctx.req.getSession().invalidate();
       HashMap<String, Object> model = new HashMap<>();
@@ -163,7 +156,7 @@ public class GeneralControllers extends BaseController {
       model.put("codeHref", "/shop");
       ctx.render("/templates/error.html", model);
 
-      System.out.println("Compra realizada: " + ShoppingCartServices.getInstance().getSells().get(0));
+      System.out.println("Compra realizada: " + sell);
     });
 
     app.get("/cart/clear-cart", ctx -> {
@@ -231,8 +224,8 @@ public class GeneralControllers extends BaseController {
     });
 
     app.get("/shop", ctx -> {
-      ShoppingCartServices.getInstance().setProducts(ProductServices.getInstance().findAll());
-      List<Product> products = ShoppingCartServices.getInstance().getProducts();
+
+      List<Product> products = ProductServices.getInstance().findAll();
       // Inject products to template
       Map<String, Object> model = new HashMap<String, Object>();
 
@@ -250,7 +243,7 @@ public class GeneralControllers extends BaseController {
       int amount = Integer.parseInt(ctx.formParam("product-amount"));
       System.out.println(String.format("ID: %d | amount: %d", id, amount));
 
-      Product product = ShoppingCartServices.getInstance().getProductById(id);
+      Product product = ProductServices.getInstance().find(id);
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
       userShoppingCart.addProduct(product, amount);
       ctx.sessionAttribute("shopping-cart", userShoppingCart);

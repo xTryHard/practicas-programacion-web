@@ -3,6 +3,7 @@ package edu.pucmm.eict.controllers;
 
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.services.ProductServices;
+import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.services.UserServices;
 import edu.pucmm.eict.utils.BaseController;
@@ -60,8 +61,8 @@ public class AdminController extends BaseController{
 
 
       get("/", ctx ->{
-        ShoppingCartServices.getInstance().setProducts(ProductServices.getInstance().findAll());
-        List<Product> products = ShoppingCartServices.getInstance().getProducts();
+
+        List<Product> products = ProductServices.getInstance().findAll();
         HashMap<String, Object> model = new HashMap<>();
         model.put("products", products);
 
@@ -111,7 +112,7 @@ public class AdminController extends BaseController{
 
       get("/update-product/:product-id", ctx -> {
         int id = Integer.parseInt(ctx.pathParam("product-id"));
-        Product product = ShoppingCartServices.getInstance().getProductById(id);
+        Product product = ProductServices.getInstance().find(id);
         HashMap<String, Object> model = new HashMap<>();
 
         ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
@@ -173,7 +174,7 @@ public class AdminController extends BaseController{
     
       get("/sells", ctx -> {
 
-        List<Sell> sells = ShoppingCartServices.getInstance().getSells();
+        List<Sell> sells = SellServices.getInstance().findAll();
         //Return sell;
         Map<String, Object> model = new HashMap<String, Object>();
       

@@ -17,17 +17,9 @@ public class ShoppingCartServices {
   private List<Product> products = new ArrayList<Product>();
   private List<Sell> sells = new ArrayList<Sell>();
   private boolean adminMode = false;
-  // private ProductServices productServices = new ProductServices();
-  // private UserServices userServices = new UserServices();
-  // private SellServices sellServices = new SellServices();
 
   private ShoppingCartServices() {
 
-    //Arreglar esto y que solo cargue cuando 
-    // this.products = productServices.getAllProducts();
-    // this.users = userServices.getAllUsers();
-    // this.sells = sellServices.getAllSells();
-    // this.setSellProducts();
     createDefaultUser();
   }
 
@@ -45,12 +37,8 @@ public class ShoppingCartServices {
     
     if (UserServices.getInstance().find("admin") == null) {
       User user = new User("admin", "admin", "admin");
-      User done = UserServices.getInstance().create(user);
-  
-      if (done != null) {
-        users.add(user);
-      } else {
-      }
+      UserServices.getInstance().create(user);
+
     } else {
       System.out.println("Usuario existente!");
     }
@@ -92,7 +80,7 @@ public class ShoppingCartServices {
   public void setProducts(List<Product> products) {
     this.products = products;
   }
-  
+
   //Returns true if product was found and updated; false if for some reason the product was not found
   public boolean updateProduct(Product product) {
 
@@ -125,8 +113,9 @@ public class ShoppingCartServices {
   }
 
   public boolean validateAdmin(String username, String password){
-    for (User user : users) {
-      if (user.getUserName().equalsIgnoreCase(username) && user.getPassword().equals(password)) return true;
+    User user = UserServices.getInstance().find(username);
+    if (user != null) {
+      if (user.getPassword().equals(password)) return true;
     }
     return false;
   }
