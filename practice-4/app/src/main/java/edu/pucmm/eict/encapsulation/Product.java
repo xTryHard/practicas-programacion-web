@@ -12,12 +12,11 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "PRODUCTS")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Product implements Serializable {
 
   // private static AtomicInteger idCount = new AtomicInteger(setAtomic());
   @Id
-  @GeneratedValue(strategy = GenerationType.TABLE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
   private BigDecimal price;

@@ -11,7 +11,6 @@ import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 import edu.pucmm.eict.services.DatabaseSetupServices;
 import java.sql.SQLException;
-import edu.pucmm.eict.services.ShoppingCartServices;
 
 public class App {
 

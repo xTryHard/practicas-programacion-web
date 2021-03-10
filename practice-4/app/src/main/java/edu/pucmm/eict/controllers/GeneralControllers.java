@@ -15,7 +15,6 @@ import edu.pucmm.eict.encapsulation.SoldProduct;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.services.SoldProductServices;
-import edu.pucmm.eict.services.UserServices;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;

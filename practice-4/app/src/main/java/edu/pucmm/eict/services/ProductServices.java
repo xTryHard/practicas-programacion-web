@@ -1,12 +1,6 @@
 
 package edu.pucmm.eict.services;
-
-import java.sql.SQLException;
-
 import edu.pucmm.eict.encapsulation.Product;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProductServices extends DatabaseOrmHandler<Product>{
 
