@@ -11,8 +11,8 @@ import javax.persistence.*;
 public class SoldProduct implements Serializable {
 
   
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
   private BigDecimal price;
@@ -23,8 +23,7 @@ public class SoldProduct implements Serializable {
 
   }
 
-  public SoldProduct(int id, String name, BigDecimal price, int amount, BigDecimal totalPrice) {
-    this.id = id;
+  public SoldProduct(String name, BigDecimal price, int amount, BigDecimal totalPrice) {
     this.name = name;
     this.price = price;
     this.amount = amount;

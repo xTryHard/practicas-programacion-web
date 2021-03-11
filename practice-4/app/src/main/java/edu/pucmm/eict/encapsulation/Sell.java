@@ -22,14 +22,15 @@ public class Sell implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private Date sellDate;
+  private String sellDateStr;
   private String clientName;
-
+  private BigDecimal totalPrice;
+  
   @OneToMany(fetch = FetchType.EAGER)
   private List<SoldProduct> soldProducts;
-
+  
   @Transient
-  private String sellDateStr;
+  private Date sellDate;
 
   @Transient
   private List<Product> products; 
@@ -43,11 +44,9 @@ public class Sell implements Serializable{
   @Transient
   private Object[] productTotalPrice;
 
-  @Transient
-  private BigDecimal totalPrice;
 
   public Sell() {
-
+    
   }
 
   public Sell(Date sellDate, String clientName, List<SoldProduct> soldproducts, BigDecimal totalPrice){

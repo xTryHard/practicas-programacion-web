@@ -177,7 +177,8 @@ public class AdminController extends BaseController{
         List<Sell> sells = SellServices.getInstance().findAll();
         
         for (Sell sell : sells) {
-          sell.getSoldProducts();
+          System.out.println("date: "+sell.getSellDateStr());
+          System.out.println("total: "+sell.getTotalPrice());
         }
         //Return sell;
         Map<String, Object> model = new HashMap<String, Object>();

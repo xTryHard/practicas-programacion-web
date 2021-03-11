@@ -1,5 +1,11 @@
 
 package edu.pucmm.eict.services;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+import javax.persistence.criteria.CriteriaQuery;
+
 import edu.pucmm.eict.encapsulation.Product;
 
 public class ProductServices extends DatabaseOrmHandler<Product>{
@@ -16,6 +22,16 @@ public class ProductServices extends DatabaseOrmHandler<Product>{
         return instance;
     }
 
+    public List<Product> findAll(int startPosition, int maxResult) throws PersistenceException {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<Product> criteriaQuery = em.getCriteriaBuilder().createQuery(Product.class);
+            criteriaQuery.select(criteriaQuery.from(Product.class));
+            return em.createQuery(criteriaQuery).setFirstResult(startPosition).setMaxResults(maxResult).getResultList();
+        } finally {
+            em.close();
+        }
+    }
     // public boolean createProduct(Product product) {
     //     boolean ok =false;
 

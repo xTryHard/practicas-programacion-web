@@ -26,6 +26,7 @@ public class GeneralControllers extends BaseController {
 
   private String adminMode = "";
   StrongPasswordEncryptor passwordEncryptor;
+  private int maxResult = 10;
 
   public GeneralControllers(Javalin app) {
     super(app);
@@ -138,7 +139,7 @@ public class GeneralControllers extends BaseController {
       List<SoldProduct> soldProducts = new ArrayList<>();
       int i = 0;
       for (Product product : userShoppingCart.getProducts()) {
-        SoldProduct soldProduct = new SoldProduct(product.getId(), product.getName(), product.getPrice(),
+        SoldProduct soldProduct = new SoldProduct(product.getName(), product.getPrice(),
             amountList.get(i), productTotalPrices.get(i));
         soldProducts.add(soldProduct);
         SoldProductServices.getInstance().create(soldProduct);
@@ -224,7 +225,11 @@ public class GeneralControllers extends BaseController {
 
     app.get("/shop", ctx -> {
 
-      List<Product> products = ProductServices.getInstance().findAll();
+      String lastPageStr = ctx.queryParam("lastPage");
+      int lastPage = 0;
+      if (lastPageStr != null) lastPage = Integer.parseInt(lastPageStr);
+
+      List<Product> products = ProductServices.getInstance().findAll(lastPage*maxResult, maxResult);
       // Inject products to template
       Map<String, Object> model = new HashMap<String, Object>();
 
