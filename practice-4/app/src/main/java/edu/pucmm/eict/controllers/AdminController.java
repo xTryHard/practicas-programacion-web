@@ -93,13 +93,16 @@ public class AdminController extends BaseController{
 
       get("/photos/visualize/:id", ctx ->{
         int id = Integer.parseInt(ctx.pathParam("id"));
-
+        Photo photo = null;
         if (isCreating) {
           List<Photo> photos = ctx.sessionAttribute("photos");
-          Photo photo = photos.get(id);
+          photo = photos.get(id);
         } else {
 
         }
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("photo", photo);
+        ctx.render("/templates/photosVisualize.html", model);
       });
 
       get("/photos/delete/:id", ctx -> {
