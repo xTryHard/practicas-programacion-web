@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import edu.pucmm.eict.encapsulation.Product;
@@ -32,6 +33,24 @@ public class ProductServices extends DatabaseOrmHandler<Product>{
             em.close();
         }
     }
+
+    public long findAmountOfProducts() {
+
+        EntityManager em = getEntityManager();
+
+        try {
+
+            CriteriaBuilder qb = em.getCriteriaBuilder();
+            CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+            cq.select(qb.count(cq.from(Product.class)));
+            return em.createQuery(cq).getSingleResult();
+
+        } finally {
+            em.close();
+        }
+
+    }
+    
     // public boolean createProduct(Product product) {
     //     boolean ok =false;
 

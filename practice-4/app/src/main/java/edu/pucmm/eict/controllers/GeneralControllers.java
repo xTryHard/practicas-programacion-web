@@ -27,6 +27,7 @@ public class GeneralControllers extends BaseController {
   private String adminMode = "";
   StrongPasswordEncryptor passwordEncryptor;
   private int maxResult = 10;
+  private int page = 1;
 
   public GeneralControllers(Javalin app) {
     super(app);
@@ -62,6 +63,7 @@ public class GeneralControllers extends BaseController {
     });
 
     app.before("/shop", ctx -> {
+      
       String admin = ctx.sessionAttribute("admin");
       String autoAuthCookie = ctx.sessionAttribute("rememberMe");
 
@@ -224,20 +226,40 @@ public class GeneralControllers extends BaseController {
     });
 
     app.get("/shop", ctx -> {
+      
+      Map<String, Object> model = new HashMap<String, Object>();
 
       String lastPageStr = ctx.queryParam("lastPage");
       int lastPage = 0;
       if (lastPageStr != null) lastPage = Integer.parseInt(lastPageStr);
 
-      List<Product> products = ProductServices.getInstance().findAll(lastPage*maxResult, maxResult);
-      // Inject products to template
-      Map<String, Object> model = new HashMap<String, Object>();
+      System.out.println("Last Page: "+lastPage );
+      page += lastPage;
 
+      System.out.println("MAX:" + ProductServices.getInstance().findAmountOfProducts());
+
+      if (page == 1) {
+        model.put("prevBtn", " btn disabled");
+      } else {
+        model.put("prevBtn", " ");
+      }
+
+
+      if ((page) * maxResult >= ProductServices.getInstance().findAmountOfProducts()) {
+        model.put("nextBtn", " btn disabled");
+      } else {
+        model.put("nextBtn", " ");
+
+      } 
+
+      List<Product> products = ProductServices.getInstance().findAll((page-1)*maxResult, maxResult);
+      // Inject products to template
       ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
 
       model.put("products", products);
       model.put("cartAmount", userShoppingCart.getTotalAmount());
       model.put("activeShop", "active");
+      model.put("page", page);
 
       ctx.render("/templates/shop.html", model);
     });
