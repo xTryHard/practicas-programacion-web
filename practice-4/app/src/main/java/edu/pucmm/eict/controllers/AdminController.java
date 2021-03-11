@@ -26,6 +26,7 @@ import java.util.Base64;
 
 public class AdminController extends BaseController{
 
+  private boolean isCreating = true;
   public AdminController(Javalin app) {
     super(app);
   }
@@ -81,7 +82,7 @@ public class AdminController extends BaseController{
         
       });
 
-      get("/photos/creation", ctx -> {
+      get("/photos", ctx -> {
 
         List<Photo> photos = ctx.sessionAttribute("photos");
         Map<String, Object> model = new HashMap<>();
@@ -90,6 +91,31 @@ public class AdminController extends BaseController{
         ctx.render("/templates/photos.html", model);
       });
 
+      get("/photos/visualize/:id", ctx ->{
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        if (isCreating) {
+          List<Photo> photos = ctx.sessionAttribute("photos");
+          Photo photo = photos.get(id);
+        } else {
+
+        }
+      });
+
+      get("/photos/delete/:id", ctx -> {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        if (isCreating) {
+          List<Photo> photos = ctx.sessionAttribute("photos");
+          photos.remove(id);
+          ctx.sessionAttribute("photos", photos);
+          ctx.redirect("/admin/photos");
+        } else {
+
+        }
+      });
+
+      
       post("/photos/upload", ctx -> {
         List<Photo> photosSession = ctx.sessionAttribute("photos");
         ctx.uploadedFiles("photo").forEach(uploadedFile -> {
@@ -102,7 +128,7 @@ public class AdminController extends BaseController{
                 e.printStackTrace();
             }
             ctx.sessionAttribute("photos", photosSession);
-            ctx.redirect("/admin/photos/creation");
+            ctx.redirect("/admin/photos");
         });
     });
 
@@ -112,13 +138,15 @@ public class AdminController extends BaseController{
         ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
         int amount = shoppingCart.getTotalAmount();
 
+        ctx.sessionAttribute("photos", new ArrayList<Photo>());
+
+        isCreating = true;
         model.put("cartAmount", amount);
         model.put("createEdit", "Crear Producto");
         model.put("createOrEdit", "create");
         model.put("crearEditar", "Crear");
         model.put("productId","");
 
-        ctx.sessionAttribute("photos", new ArrayList<Photo>());
         ctx.render("/templates/create-edit.html", model);
       });
 

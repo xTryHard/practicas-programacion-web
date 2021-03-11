@@ -32,12 +32,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="photo : ${photos}">
+          <tr th:each="photo, status : ${photos}">
             <td th:text="${photo.name}">Nombre Foto</td>
             <td th:text="${photo.mimeType}">PNG</td>
             <td>
-              <a th:text="Visualizar" th:href="'/admin/photos/visualize/id'" class="btn btn-success"></a> |
-              <a th:text="Eliminar" th:href="'/admin/photos/creation/delete/id'" class="btn btn-danger"></a>
+              <a th:text="Visualizar" th:href="'/admin/photos/visualize/'+${status.index}"
+                class="btn btn-success"></a>
+              |
+              <a th:text="Eliminar" th:href="'/admin/photos/delete/'+${status.index}"
+                class="btn btn-danger"></a>
             </td>
           </tr>
         </tbody>
