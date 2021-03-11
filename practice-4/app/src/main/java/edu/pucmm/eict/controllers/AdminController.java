@@ -2,6 +2,7 @@
 package edu.pucmm.eict.controllers;
 
 import edu.pucmm.eict.encapsulation.Product;
+import edu.pucmm.eict.services.PhotoServices;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
@@ -14,10 +15,13 @@ import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.User;
 import edu.pucmm.eict.encapsulation.Photo;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Base64;
 
 
 public class AdminController extends BaseController{
@@ -77,6 +81,31 @@ public class AdminController extends BaseController{
         
       });
 
+      get("/photos/creation", ctx -> {
+
+        List<Photo> photos = ctx.sessionAttribute("photos");
+        Map<String, Object> model = new HashMap<>();
+        model.put("photos", photos);
+
+        ctx.render("/templates/photos.html", model);
+      });
+
+      post("/photos/upload", ctx -> {
+        List<Photo> photosSession = ctx.sessionAttribute("photos");
+        ctx.uploadedFiles("photo").forEach(uploadedFile -> {
+            try {
+                byte[] bytes = uploadedFile.getContent().readAllBytes();
+                String encodedString = Base64.getEncoder().encodeToString(bytes);
+                Photo photo = new Photo(uploadedFile.getFilename(), uploadedFile.getContentType(), encodedString);
+                photosSession.add(photo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ctx.sessionAttribute("photos", photosSession);
+            ctx.redirect("/admin/photos/creation");
+        });
+    });
+
       get("/create-product", ctx-> {
         HashMap<String, Object> model = new HashMap<>();
         ShoppingCartServices.getInstance().setAdminMode(true);
@@ -89,6 +118,7 @@ public class AdminController extends BaseController{
         model.put("crearEditar", "Crear");
         model.put("productId","");
 
+        ctx.sessionAttribute("photos", new ArrayList<Photo>());
         ctx.render("/templates/create-edit.html", model);
       });
 

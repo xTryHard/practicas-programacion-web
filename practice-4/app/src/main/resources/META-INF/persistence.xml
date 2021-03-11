@@ -9,6 +9,9 @@
         <class>edu.pucmm.eict.encapsulation.Sell</class>
         <class>edu.pucmm.eict.encapsulation.SoldProduct</class>
         <class>edu.pucmm.eict.encapsulation.User</class>
+        <class>edu.pucmm.eict.encapsulation.Photo</class>
+
+        
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/dbpractice4" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
