@@ -3,6 +3,7 @@ package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
 // import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
 // import edu.pucmm.eict.services.ProductServices;
 
@@ -20,21 +21,24 @@ public class Product implements Serializable {
   private int id;
   private String name;
   private BigDecimal price;
+  private String description;
+
+  @OneToMany(fetch = FetchType.EAGER)
+  private List<Photo> photos;
+
 
   public Product() {
 
   }
+  
+  public Product(String name, BigDecimal price, String description, List<Photo> photos) {
 
-  public Product(String name, BigDecimal price) {
-    // this.id = idCount.incrementAndGet();
     this.name = name;
     this.price = price;
-  }
+    this.description = description;
+    this.photos = photos;
 
-  // private static int setAtomic() {
-  //   ProductServices pServices = new ProductServices();
-  //   return pServices.getLastId();
-  // }
+  }
 
   public int getId() {
     return this.id;
@@ -58,6 +62,22 @@ public class Product implements Serializable {
 
   public void setPrice (BigDecimal price) {
     this.price = price;
+  }
+
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public List<Photo> getPhotos() {
+    return this.photos;
+  }
+
+  public void setPhotos(List<Photo> photos) {
+    this.photos = photos;
   }
 
 }

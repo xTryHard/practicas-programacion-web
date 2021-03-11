@@ -12,6 +12,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.User;
+import edu.pucmm.eict.encapsulation.Photo;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -94,7 +95,11 @@ public class AdminController extends BaseController{
       post("/create-product", ctx -> {
         String name = ctx.formParam("productName");
         BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
-        Product product = new Product(name, price);
+        String description = ctx.formParam("productDescription");
+
+        List<Photo> photos = ctx.sessionAttribute("photos");
+        
+        Product product = new Product(name, price, description, photos);
         Product done = ProductServices.getInstance().create(product);
         
         if (done != null) {
