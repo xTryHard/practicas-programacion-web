@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Base64;
@@ -99,7 +100,7 @@ public class AdminController extends BaseController{
         Map<String, Object> model = new HashMap<>();
 
         //if (isCreating) {
-          photos = ctx.sessionAttribute("photos");
+          photos = new ArrayList<>(ctx.sessionAttribute("photos"));
           model.put("isCreating", isCreating);
         //} else {
           // int productId = Integer.parseInt(ctx.pathParam("productId"));
@@ -125,7 +126,7 @@ public class AdminController extends BaseController{
 
         int id = Integer.parseInt(ctx.pathParam("id"));
        // if (isCreating) {
-          List<Photo> photos = ctx.sessionAttribute("photos");
+          List<Photo> photos = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
           Photo photo = photos.get(id);
           model.put("photo", photo);
       //  } else {
@@ -138,7 +139,7 @@ public class AdminController extends BaseController{
       get("/photos/delete/:id", ctx -> {
         int id = Integer.parseInt(ctx.pathParam("id"));
         //if (isCreating) {
-          List<Photo> photos = ctx.sessionAttribute("photos");
+          List<Photo> photos = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
           Photo photo = photos.remove(id);
           
           if (!isCreating) {
@@ -169,7 +170,7 @@ public class AdminController extends BaseController{
       
       post("/photos-upload", ctx -> {
 
-        List<Photo> photosSession = ctx.sessionAttribute("photos");
+        List<Photo> photosSession = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
         ctx.uploadedFiles("photo").forEach(uploadedFile -> {
             try {
                 byte[] bytes = uploadedFile.getContent().readAllBytes();
@@ -227,7 +228,7 @@ public class AdminController extends BaseController{
           PhotoServices.getInstance().create(photo);
         }
 
-        Product product = new Product(name, price, description, photos);
+        Product product = new Product(name, price, description, new HashSet<Photo>(photos));
         Product done = ProductServices.getInstance().create(product);
         ctx.sessionAttribute("photos", null);
 
@@ -272,11 +273,11 @@ public class AdminController extends BaseController{
         String priceStr = ctx.sessionAttribute("productPrice");
         BigDecimal price = new BigDecimal(priceStr);
         String description = ctx.sessionAttribute("productDescription");
-        List<Photo> photos = ctx.sessionAttribute("photos");
+        List<Photo> photos = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
         productToUpdate.setName(name);
         productToUpdate.setPrice(price);
         productToUpdate.setDescription(description);
-        productToUpdate.setPhotos(photos);
+        productToUpdate.setPhotos(new HashSet<Photo>(photos));
 
         for (Photo photo : photos) {
           if (PhotoServices.getInstance().find(photo.getId()) == null ){
@@ -315,7 +316,7 @@ public class AdminController extends BaseController{
 
         int id = Integer.parseInt(ctx.pathParam("product-id"));
 
-        List<Photo> photos = ProductServices.getInstance().find(id).getPhotos();
+        List<Photo> photos = new ArrayList<Photo>(ProductServices.getInstance().find(id).getPhotos());
         boolean done = ProductServices.getInstance().delete(id);
         for (Photo photo : photos) {
           PhotoServices.getInstance().delete(photo.getId());

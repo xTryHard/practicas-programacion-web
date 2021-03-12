@@ -4,13 +4,12 @@ package edu.pucmm.eict.encapsulation;
 import java.math.BigDecimal;
 // import java.util.concurrent.atomic.AtomicInteger;
 import java.util.List;
+import java.util.Set;
 
 // import edu.pucmm.eict.services.ProductServices;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import org.hibernate.annotations.Cascade;
 
 @SuppressWarnings("serial")
 @Entity
@@ -26,16 +25,18 @@ public class Product implements Serializable {
   private String description;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private List<Photo> photos;
+  // @OrderColumn(name="id")
+  private Set<Photo> photos;
 
   @OneToMany(fetch = FetchType.EAGER)
-  List<Comment> comments;
+  // @OrderColumn(name="id")
+  private Set<Comment> comments;
 
   public Product() {
 
   }
   
-  public Product(String name, BigDecimal price, String description, List<Photo> photos) {
+  public Product(String name, BigDecimal price, String description, Set<Photo> photos) {
 
     this.name = name;
     this.price = price;
@@ -76,19 +77,19 @@ public class Product implements Serializable {
     this.description = description;
   }
 
-  public List<Photo> getPhotos() {
+  public Set<Photo> getPhotos() {
     return this.photos;
   }
 
-  public void setPhotos(List<Photo> photos) {
+  public void setPhotos(Set<Photo> photos) {
     this.photos = photos;
   }
 
-  public List<Comment> getComments() {
+  public Set<Comment> getComments() {
     return this.comments;
   }
 
-  public void setComments(List<Comment> comments) {
+  public void setComments(Set<Comment> comments) {
     this.comments = comments;
   }
 
