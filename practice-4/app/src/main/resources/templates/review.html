@@ -51,9 +51,11 @@
       <div th:each="comment, index : ${comments}" class="card-body" style="overflow-y: auto; max-height: 400px;">
         <div class=" card mx-auto" style="width: 45rem; margin-bottom: 0.5rem;">
           <div class="card-body">
-            <h5 class="card-title text-left" th:text="'Nombre:'+${comment.name}+' - Fecha:'+${comment.date}">Nombre:
+            <h5 class="card-title text-left"
+              th:text="'Nombre: '+${comment.name}+'      -      Fecha: '+${comment.date}">Nombre:
               Fulano - Fecha: Hoy</h5>
-            <a th:if="${isAdmin}" class="btn btn-danger pull-right" th:href="'/admin/delete-comment/'+${comment.id}">
+            <a th:if="${isAdmin}" class="btn btn-danger pull-right"
+              th:href="'/admin/delete-comment/'+${product.id}+'/'+${comment.id}">
               <i class="far fa-trash-alt"></i>
             </a>
             <p class="card-text" th:text="${comment.message}">Some quick example text to build on the card title and
@@ -72,7 +74,7 @@
       <div class="card-body">
 
         <!-- Default form reply -->
-        <form>
+        <form th:action="'/comments/'+${product.id}" method="POST">
 
           <!-- Comment -->
           <div class="form-group">

@@ -14,7 +14,7 @@ public class Comment implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private String author;
+  private String name;
   private String message;
   private String date;
 
@@ -22,8 +22,8 @@ public class Comment implements Serializable {
 
   }
 
-  public Comment(String author, String message) {
-    this.author = author;
+  public Comment(String name, String message) {
+    this.name = name;
     this.message = message;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     this.date = sdf.format(new Date());
@@ -37,12 +37,12 @@ public class Comment implements Serializable {
     this.id = id;
   }
 
-  public String getAuthor() {
-    return this.author;
+  public String getName() {
+    return this.name;
   }
 
-  public void setAuthor(String author) {
-    this.author = author;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getMessage( ) {

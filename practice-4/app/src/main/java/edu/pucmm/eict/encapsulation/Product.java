@@ -2,6 +2,7 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 // import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class Product implements Serializable {
     this.price = price;
     this.description = description;
     this.photos = photos;
-    
+    this.comments = new HashSet<>();
   }
 
   public int getId() {

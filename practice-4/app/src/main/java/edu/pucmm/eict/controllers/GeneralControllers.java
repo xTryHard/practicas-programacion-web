@@ -17,6 +17,7 @@ import edu.pucmm.eict.encapsulation.SoldProduct;
 import edu.pucmm.eict.services.SellServices;
 import edu.pucmm.eict.services.ShoppingCartServices;
 import edu.pucmm.eict.services.SoldProductServices;
+import edu.pucmm.eict.services.CommentServices;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.utils.BaseController;
 import io.javalin.Javalin;
@@ -335,6 +336,21 @@ public class GeneralControllers extends BaseController {
       }
       ctx.render("/templates/review.html", model);
     });
+
+    app.post("/comments/:id", ctx -> {
+      int productId = Integer.parseInt(ctx.pathParam("id"));
+      String commentName = ctx.formParam("commentName");
+      String commentMessage = ctx.formParam("commentMessage");
+
+      Comment comment = new Comment(commentName, commentMessage);
+      
+      Product product = ProductServices.getInstance().find(productId);
+      product.getComments().add(comment);
+      CommentServices.getInstance().create(comment);
+      ProductServices.getInstance().update(product);
+      ctx.redirect("/review/"+productId);
+    });
+
   }
 
 }

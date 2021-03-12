@@ -2,6 +2,7 @@
 package edu.pucmm.eict.controllers;
 
 import edu.pucmm.eict.encapsulation.Product;
+import edu.pucmm.eict.services.CommentServices;
 import edu.pucmm.eict.services.PhotoServices;
 import edu.pucmm.eict.services.ProductServices;
 import edu.pucmm.eict.services.SellServices;
@@ -13,6 +14,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
 import edu.pucmm.eict.encapsulation.User;
+import edu.pucmm.eict.encapsulation.Comment;
 import edu.pucmm.eict.encapsulation.Photo;
 
 import java.io.IOException;
@@ -396,6 +398,25 @@ public class AdminController extends BaseController{
           ctx.render("/templates/error.html", model);
         }
 
+      });
+
+      get("/delete-comment/:productId/:commentId", ctx -> {
+        int commentId = Integer.parseInt(ctx.pathParam("commentId"));
+        int productId = Integer.parseInt(ctx.pathParam("productId"));
+
+        Product product = ProductServices.getInstance().find(productId);
+        Comment comment = CommentServices.getInstance().find(commentId);
+        
+        for (Comment newComment : product.getComments()) {
+          if (newComment.getId() == comment.getId()) {
+            comment = newComment;
+            break;
+          }
+        }
+        product.getComments().remove(comment);
+        ProductServices.getInstance().update(product);
+        CommentServices.getInstance().delete(commentId);
+        ctx.redirect("/review/"+productId);
       });
 
       });
