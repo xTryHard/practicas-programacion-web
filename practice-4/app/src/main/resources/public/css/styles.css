@@ -161,3 +161,23 @@ th, td {
 #paginationContainer {
   margin-top: 20px;
 }
+
+
+.carousel-inner > .carousel-item {
+  height: 400px;
+  text-align: center;
+}
+
+.carousel-inner > .carousel-item > img {
+  display: inline-block !important;
+}
+
+#carouselExampleIndicators {
+  margin-bottom: 10px !important;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  filter: invert(80%);
+}
+
