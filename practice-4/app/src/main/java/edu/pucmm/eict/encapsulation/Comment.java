@@ -1,6 +1,8 @@
 package edu.pucmm.eict.encapsulation;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ public class Comment implements Serializable {
   private int id;
   private String author;
   private String message;
+  private String date;
 
   public Comment() {
 
@@ -22,6 +25,8 @@ public class Comment implements Serializable {
   public Comment(String author, String message) {
     this.author = author;
     this.message = message;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    this.date = sdf.format(new Date());
   }
 
   public int getId() {
@@ -48,4 +53,11 @@ public class Comment implements Serializable {
     this.message = message;
   }
 
+  public String getDate() {
+    return this.date;
+  }
+
+  public void setDate(String date) {
+    this.date = date;
+  }
 }

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pucmm.eict.encapsulation.Comment;
+import edu.pucmm.eict.encapsulation.Photo;
 import edu.pucmm.eict.encapsulation.Product;
 import edu.pucmm.eict.encapsulation.Sell;
 import edu.pucmm.eict.encapsulation.ShoppingCart;
@@ -314,7 +316,24 @@ public class GeneralControllers extends BaseController {
     }); 
 
     app.get("/review/:id", ctx -> {
-      ctx.render("/templates/review.html");
+
+      HashMap<String, Object> model = new HashMap<>();
+      int id = Integer.parseInt(ctx.pathParam("id"));
+      Product product = ProductServices.getInstance().find(id);
+      List<Photo> photos = new ArrayList<Photo>(product.getPhotos());
+      List<Comment> comments = new ArrayList<Comment>(product.getComments());
+      
+
+      model.put("photos", photos);
+      model.put("comments", comments);
+      model.put("product", product);
+      model.put("totalComments", comments.size());
+      if (ctx.sessionAttribute("admin") != null) {
+        model.put("isAdmin", true);
+      } else {
+        model.put("isAdmin", false);
+      }
+      ctx.render("/templates/review.html", model);
     });
   }
 

@@ -3,7 +3,6 @@ package edu.pucmm.eict.encapsulation;
 
 import java.math.BigDecimal;
 // import java.util.concurrent.atomic.AtomicInteger;
-import java.util.List;
 import java.util.Set;
 
 // import edu.pucmm.eict.services.ProductServices;

@@ -127,6 +127,14 @@ footer {
   margin-bottom: 1.5rem;
   margin-top: 6rem;
 }
+.heading-sm {
+  text-align: left;
+  color: #000000;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
 
 .table-border {
   border: 1px solid #333;
@@ -159,6 +167,25 @@ th, td {
 }
 
 #paginationContainer {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 20px;
 }
+
+
+.carousel-inner > .carousel-item {
+  height: 400px;
+  text-align: center;
+}
+
+.carousel-inner > .carousel-item > img {
+  display: inline-block !important;
+}
+
+#carouselExampleIndicators {
+  margin-bottom: 10px !important;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  filter: invert(80%);
+}
+
