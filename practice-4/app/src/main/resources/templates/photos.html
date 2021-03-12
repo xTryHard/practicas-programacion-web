@@ -15,13 +15,16 @@
       <h1 class="heading">Subir Fotos Producto</h1>
     </div>
     <div class="container" id="products-table" style="overflow-y:auto;">
-      <form action="/admin/photos/upload" method="post" enctype="multipart/form-data">
+      <form id="upload" action="/admin/photos/upload" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="photo">Foto</label>
           <input class="form-control" id="photo" type="file" name="photo" multiple required>
         </div>
-        <button type="submit" class="btn btn-info">Enviar</button>
+        <button style="display: inline-block" type="submit" class="btn btn-info">Subir foto</button>
+        <a href="/admin/create-product" class="btn btn-secondary flex-btn-2"> Cancelar </a>
       </form>
+
+
       <hr />
       <table class="table table-bordered table-hover">
         <thead class="bg-info">
@@ -36,11 +39,9 @@
             <td th:text="${photo.name}">Nombre Foto</td>
             <td th:text="${photo.mimeType}">PNG</td>
             <td>
-              <a th:text="Visualizar" th:href="'/admin/photos/visualize/'+${status.index}"
-                class="btn btn-success"></a>
+              <a th:text="Visualizar" th:href="'/admin/photos/visualize/'+${status.index}" class="btn btn-success"></a>
               |
-              <a th:text="Eliminar" th:href="'/admin/photos/delete/'+${status.index}"
-                class="btn btn-danger"></a>
+              <a th:text="Eliminar" th:href="'/admin/photos/delete/'+${status.index}" class="btn btn-danger"></a>
             </td>
           </tr>
         </tbody>
