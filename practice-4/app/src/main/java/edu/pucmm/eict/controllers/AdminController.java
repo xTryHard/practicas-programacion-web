@@ -98,19 +98,25 @@ public class AdminController extends BaseController{
         List<Photo> photos = null;
         Map<String, Object> model = new HashMap<>();
 
-        if (isCreating) {
+        //if (isCreating) {
           photos = ctx.sessionAttribute("photos");
-          model.put("isCreating", true);
-        } else {
-          int productId = Integer.parseInt(ctx.pathParam("productId"));
-          Product product = ProductServices.getInstance().find(productId);
-          photos = product.getPhotos();
-          model.put("productId", productId);
-          model.put("isCreating", false);
-        }
+          model.put("isCreating", isCreating);
+        //} else {
+          // int productId = Integer.parseInt(ctx.pathParam("productId"));
+          // Product product = ProductServices.getInstance().find(productId);
+          // photos = product.getPhotos();
+          // model.put("productId", productId);
+          // model.put("isCreating", false);
+
+          if (!isCreating) {
+            int productId = Integer.parseInt(ctx.pathParam("productId"));
+            model.put("productId", productId);
+            ctx.sessionAttribute("productId", productId);
+
+          }
+     //   }
         model.put("photos", photos);
         
-
         ctx.render("/templates/photos.html", model);
       });
 
@@ -118,33 +124,51 @@ public class AdminController extends BaseController{
         HashMap<String, Object> model = new HashMap<String, Object>();
 
         int id = Integer.parseInt(ctx.pathParam("id"));
-        if (isCreating) {
+       // if (isCreating) {
           List<Photo> photos = ctx.sessionAttribute("photos");
           Photo photo = photos.get(id);
           model.put("photo", photo);
-        } else {
-          Photo photo = PhotoServices.getInstance().find(id);
-          model.put("photo", photo);
-        }
+      //  } else {
+      //    Photo photo = PhotoServices.getInstance().find(id);
+        //  model.put("photo", photo);
+     //   }
         ctx.render("/templates/photosVisualize.html", model);
       });
 
       get("/photos/delete/:id", ctx -> {
         int id = Integer.parseInt(ctx.pathParam("id"));
-
-        if (isCreating) {
+        //if (isCreating) {
           List<Photo> photos = ctx.sessionAttribute("photos");
-          photos.remove(id);
-          ctx.sessionAttribute("photos", photos);
-          ctx.redirect("/admin/photos");
-        } else {
-          Photo photo = PhotoServices.getInstance().find(id);
+          Photo photo = photos.remove(id);
           
-        }
+          if (!isCreating) {
+            if (ctx.sessionAttribute("deletedPhotos") == null) {
+              List<Photo> deletedPhotos = new ArrayList<Photo>();
+              ctx.sessionAttribute("deletedPhotos", deletedPhotos);
+            }
+
+            List<Photo> deletedPhotos = ctx.sessionAttribute("deletedPhotos");
+            deletedPhotos.add(photo);
+            ctx.sessionAttribute("deletedPhotos", deletedPhotos);
+          }
+          ctx.sessionAttribute("photos", photos);
+
+          if (isCreating) {
+            ctx.redirect("/admin/photos/-1");
+          } else {
+            int productId = ctx.sessionAttribute("productId");
+            ctx.redirect("/admin/photos/"+productId);
+
+          }
+        //} else {
+          //Photo photo = PhotoServices.getInstance().find(id);
+          
+        //}
       });
 
       
-      post("/photos/upload", ctx -> {
+      post("/photos-upload", ctx -> {
+
         List<Photo> photosSession = ctx.sessionAttribute("photos");
         ctx.uploadedFiles("photo").forEach(uploadedFile -> {
             try {
@@ -155,9 +179,17 @@ public class AdminController extends BaseController{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ctx.sessionAttribute("photos", photosSession);
+          });
+          ctx.sessionAttribute("photos", photosSession);
+
+          if (isCreating) {
             ctx.redirect("/admin/photos/-1");
-        });
+          } else {
+            int productId = ctx.sessionAttribute("productId");
+
+            ctx.redirect("/admin/photos/"+productId);
+
+          }
     });
 
       get("/create-product", ctx-> {
@@ -197,7 +229,8 @@ public class AdminController extends BaseController{
 
         Product product = new Product(name, price, description, photos);
         Product done = ProductServices.getInstance().create(product);
-        
+        ctx.sessionAttribute("photos", null);
+
         if (done != null) {
         //Rediret to 
           // ShoppingCartServices.getInstance().createProduct(product);
@@ -215,7 +248,7 @@ public class AdminController extends BaseController{
         int id = Integer.parseInt(ctx.pathParam("product-id"));
         Product product = ProductServices.getInstance().find(id);
         HashMap<String, Object> model = new HashMap<>();
-
+        ctx.sessionAttribute("photos", product.getPhotos());
         ShoppingCart shoppingCart = ctx.sessionAttribute("shopping-cart");
         int amount = shoppingCart.getTotalAmount();
 
@@ -229,19 +262,42 @@ public class AdminController extends BaseController{
         ctx.render("/templates/create-edit.html", model);
         isCreating = false;
       });
-      post("/update-product/:product-id", ctx -> {
+      post("/update-product/:productId", ctx -> {
 
-        int id = Integer.parseInt(ctx.pathParam("product-id"));
-        String name = ctx.formParam("productName");
-        BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
+        int id = Integer.parseInt(ctx.pathParam("productId"));
 
-        Product productToUpdate = new Product();
-        productToUpdate.setId(id);
+        Product productToUpdate = ProductServices.getInstance().find(id);
+
+        String name = ctx.sessionAttribute("productName");
+        String priceStr = ctx.sessionAttribute("productPrice");
+        BigDecimal price = new BigDecimal(priceStr);
+        String description = ctx.sessionAttribute("productDescription");
+        List<Photo> photos = ctx.sessionAttribute("photos");
         productToUpdate.setName(name);
         productToUpdate.setPrice(price);
+        productToUpdate.setDescription(description);
+        productToUpdate.setPhotos(photos);
 
+        for (Photo photo : photos) {
+          if (PhotoServices.getInstance().find(photo.getId()) == null ){
+            PhotoServices.getInstance().create(photo);
+          }
+        }
+        ctx.sessionAttribute("productName", null);
+        ctx.sessionAttribute("productPrice", null);
+        ctx.sessionAttribute("productDescription", null);
+        ctx.sessionAttribute("photos", null);
         Product done = ProductServices.getInstance().update(productToUpdate);
 
+        List<Photo> deletedPhotos = ctx.sessionAttribute("deletedPhotos");
+        
+        if (deletedPhotos != null) {
+          for (Photo photo : deletedPhotos) {
+            PhotoServices.getInstance().delete(photo.getId());
+          }
+          ctx.sessionAttribute("deletedPhotos", null);
+        }
+        
         if (done != null) {
           //Redirect to list
           HashMap<String, Object> model = new HashMap<>();
@@ -259,8 +315,11 @@ public class AdminController extends BaseController{
 
         int id = Integer.parseInt(ctx.pathParam("product-id"));
 
+        List<Photo> photos = ProductServices.getInstance().find(id).getPhotos();
         boolean done = ProductServices.getInstance().delete(id);
-
+        for (Photo photo : photos) {
+          PhotoServices.getInstance().delete(photo.getId());
+        }
         if (done) {
           //Redirect list
           HashMap<String, Object> model = new HashMap<>();

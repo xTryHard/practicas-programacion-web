@@ -21,10 +21,8 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-shopping-basket"></i></span>
                 </div>
-                <input th:if="${!edit}" name="productName" class="form-control" placeholder="Nombre del producto"
-                  type="text" required>
-                <input th:if="${edit}" name="productName" class="form-control" placeholder="Nombre del producto"
-                  type="text" th:value="${product.name}" required>
+                <input name="productName" class="form-control" placeholder="Nombre del producto" type="text"
+                  th:value="${product.name}" required>
               </div> <!-- input-group.// -->
             </div> <!-- form-group// -->
             <div class="form-group">

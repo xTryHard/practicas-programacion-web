@@ -10,6 +10,8 @@ import java.util.List;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "PRODUCTS")
