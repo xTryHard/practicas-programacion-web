@@ -127,6 +127,14 @@ footer {
   margin-bottom: 1.5rem;
   margin-top: 6rem;
 }
+.heading-sm {
+  text-align: left;
+  color: #000000;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
 
 .table-border {
   border: 1px solid #333;
