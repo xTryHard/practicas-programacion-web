@@ -26,6 +26,14 @@ public class Photo implements Serializable{
     this.base64 = base64;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+  
   public String getName() {
     return this.name;
   }

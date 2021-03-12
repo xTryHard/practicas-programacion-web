@@ -82,26 +82,50 @@ public class AdminController extends BaseController{
         
       });
 
-      get("/photos", ctx -> {
+      post("/photos/:productId", ctx -> {
 
-        List<Photo> photos = ctx.sessionAttribute("photos");
+        String productId = ctx.pathParam("productId");
+        String productName = ctx.formParam("productName");
+        String productPrice = ctx.formParam("productPrice");
+        String productDescription = ctx.formParam("productDescription");
+        ctx.sessionAttribute("productName", productName);
+        ctx.sessionAttribute("productPrice", productPrice);
+        ctx.sessionAttribute("productDescription", productDescription);
+        ctx.redirect("/admin/photos/"+productId);
+      });
+
+      get("/photos/:productId", ctx -> {
+        List<Photo> photos = null;
         Map<String, Object> model = new HashMap<>();
+
+        if (isCreating) {
+          photos = ctx.sessionAttribute("photos");
+          model.put("isCreating", true);
+        } else {
+          int productId = Integer.parseInt(ctx.pathParam("productId"));
+          Product product = ProductServices.getInstance().find(productId);
+          photos = product.getPhotos();
+          model.put("productId", productId);
+          model.put("isCreating", false);
+        }
         model.put("photos", photos);
+        
 
         ctx.render("/templates/photos.html", model);
       });
 
       get("/photos/visualize/:id", ctx ->{
+        HashMap<String, Object> model = new HashMap<String, Object>();
+
         int id = Integer.parseInt(ctx.pathParam("id"));
-        Photo photo = null;
         if (isCreating) {
           List<Photo> photos = ctx.sessionAttribute("photos");
-          photo = photos.get(id);
+          Photo photo = photos.get(id);
+          model.put("photo", photo);
         } else {
-
+          Photo photo = PhotoServices.getInstance().find(id);
+          model.put("photo", photo);
         }
-        HashMap<String, Object> model = new HashMap<String, Object>();
-        model.put("photo", photo);
         ctx.render("/templates/photosVisualize.html", model);
       });
 
@@ -114,7 +138,8 @@ public class AdminController extends BaseController{
           ctx.sessionAttribute("photos", photos);
           ctx.redirect("/admin/photos");
         } else {
-
+          Photo photo = PhotoServices.getInstance().find(id);
+          
         }
       });
 
@@ -131,7 +156,7 @@ public class AdminController extends BaseController{
                 e.printStackTrace();
             }
             ctx.sessionAttribute("photos", photosSession);
-            ctx.redirect("/admin/photos");
+            ctx.redirect("/admin/photos/-1");
         });
     });
 
@@ -149,17 +174,27 @@ public class AdminController extends BaseController{
         model.put("createOrEdit", "create");
         model.put("crearEditar", "Crear");
         model.put("productId","");
+        model.put("edit", false);
+
 
         ctx.render("/templates/create-edit.html", model);
       });
 
       post("/create-product", ctx -> {
-        String name = ctx.formParam("productName");
-        BigDecimal price = new BigDecimal(ctx.formParam("productPrice"));
-        String description = ctx.formParam("productDescription");
+        String name = ctx.sessionAttribute("productName");
+        String priceStr = ctx.sessionAttribute("productPrice");
+        BigDecimal price = new BigDecimal(priceStr);
+        String description = ctx.sessionAttribute("productDescription");
 
+        ctx.sessionAttribute("productName", null);
+        ctx.sessionAttribute("productPrice", null);
+        ctx.sessionAttribute("productDescription", null);
         List<Photo> photos = ctx.sessionAttribute("photos");
         
+        for (Photo photo : photos) {
+          PhotoServices.getInstance().create(photo);
+        }
+
         Product product = new Product(name, price, description, photos);
         Product done = ProductServices.getInstance().create(product);
         
@@ -192,6 +227,7 @@ public class AdminController extends BaseController{
         model.put("crearEditar", "Editar");
         model.put("createEdit", "Editar Producto");
         ctx.render("/templates/create-edit.html", model);
+        isCreating = false;
       });
       post("/update-product/:product-id", ctx -> {
 

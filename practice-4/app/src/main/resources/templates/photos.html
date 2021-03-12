@@ -20,13 +20,21 @@
           <label for="photo">Foto</label>
           <input class="form-control" id="photo" type="file" name="photo" multiple required>
         </div>
-        <button style="display: inline-block" type="submit" class="btn btn-info">Subir foto</button>
-        <a href="/admin/create-product" class="btn btn-secondary flex-btn-2"> Cancelar </a>
+        <button type="submit" class="btn btn-info" form="upload">Subir foto</button>
+        <button th:if="${isCreating}" id="toCreate" type="submit" class="btn btn-success" form="continueCreate"
+          disabled>Crear
+          producto</button>
+        <button th:if="${!isCreating}" id="toEdit" type="submit" class="btn btn-success" form="continueEdit"
+          disabled>Editar
+          producto</button>
+      </form>
+      <form th:if="${isCreating}" action="/admin/create-product" id="continueCreate" method="POST"></form>
+
+      <form th:if="${!isCreating}" th:action="'/admin/edit-product/'+${productId}" id="continueEdit" method="POST">
       </form>
 
-
       <hr />
-      <table class="table table-bordered table-hover">
+      <table id="photosTable" class="table table-bordered table-hover">
         <thead class="bg-info">
           <tr>
             <th scope="col">Nombre</th>
@@ -39,9 +47,17 @@
             <td th:text="${photo.name}">Nombre Foto</td>
             <td th:text="${photo.mimeType}">PNG</td>
             <td>
-              <a th:text="Visualizar" th:href="'/admin/photos/visualize/'+${status.index}" class="btn btn-success"></a>
+              <a th:if="${isCreating}" th:text="Visualizar" th:href="'/admin/photos/visualize/'+${status.index}"
+                class="btn btn-success"></a>
               |
-              <a th:text="Eliminar" th:href="'/admin/photos/delete/'+${status.index}" class="btn btn-danger"></a>
+              <a th:if="${isCreating}" th:text="Eliminar" th:href="'/admin/photos/delete/'+${status.index}"
+                class="btn btn-danger"></a>
+
+              <a th:if="${!isCreating}" th:text="Visualizar" th:href="'/admin/photos/visualize/'+${photo.id}"
+                class="btn btn-success"></a>
+              |
+              <a th:if="${!isCreating}" th:text="Eliminar" th:href="'/admin/photos/delete/'+${photo.id}"
+                class="btn btn-danger"></a>
             </td>
           </tr>
         </tbody>
@@ -59,6 +75,16 @@
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script>
+    let rows = document.getElementById("photosTable").rows.length;
+    let btn = document.getElementById("toCreate");
+
+    if (rows > 1) {
+      toCreate.disabled = false;
+    } else {
+      toCreate.disabled = true;
+    }
   </script>
 </body>
 
