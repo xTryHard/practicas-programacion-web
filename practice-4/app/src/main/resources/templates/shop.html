@@ -64,19 +64,22 @@
             <th scope="col">Producto</th>
             <th scope="col">Precio (RD$)</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Acción</th>
+            <th scope="col">Acción 1</th>
+            <th scope="col">Acción 2</th>
           </tr>
         </thead>
         <tbody class="bg-tbody">
           <tr th:each="product : ${products}">
-            <td style="width: 25%" th:text="${product.name}"></td>
+            <td style="width: 35%" th:text="${product.name}"></td>
             <td style="width: 25%" th:text="${product.price}"></td>
-            <td style="width: 25%;">
+            <td style="width: 13.33%;">
               <form method="POST" th:id="'amount-form-'+${product.id}" th:action="'shop/add/'+${product.id}"><input
                   type="number" id="product-amount" placeholder="" value="1" name="product-amount" required></form>
             </td>
-            <td style="width: 25%"><button type="submit" class="btn btn-success"
+            <td style="width: 13.33%"><button type="submit" class="btn btn-success"
                 th:form="'amount-form-'+${product.id}">Agregar</button>
+            </td>
+            <td style="width: 13.33%"><a class="btn btn-info" th:href="'/review/'+${product.id}">Ver más</a>
             </td>
           </tr>
         </tbody>

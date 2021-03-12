@@ -312,6 +312,10 @@ public class GeneralControllers extends BaseController {
         ctx.render("/templates/error.html", model);
       }
     }); 
+
+    app.get("/review/:id", ctx -> {
+      ctx.render("/templates/review.html");
+    });
   }
 
 }

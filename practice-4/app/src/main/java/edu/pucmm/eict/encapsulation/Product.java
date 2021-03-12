@@ -28,6 +28,8 @@ public class Product implements Serializable {
   @OneToMany(fetch = FetchType.EAGER)
   private List<Photo> photos;
 
+  @OneToMany(fetch = FetchType.EAGER)
+  List<Comment> comments;
 
   public Product() {
 
@@ -39,7 +41,7 @@ public class Product implements Serializable {
     this.price = price;
     this.description = description;
     this.photos = photos;
-
+    
   }
 
   public int getId() {
@@ -80,6 +82,14 @@ public class Product implements Serializable {
 
   public void setPhotos(List<Photo> photos) {
     this.photos = photos;
+  }
+
+  public List<Comment> getComments() {
+    return this.comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
   }
 
 }
