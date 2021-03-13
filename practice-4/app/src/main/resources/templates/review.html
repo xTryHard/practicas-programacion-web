@@ -19,8 +19,8 @@
       </ol>
       <div id="inner" class="carousel-inner">
         <div th:each="photo, index : ${photos}" class="carousel-item">
-          <img class="d-block" style="width: 70%;" th:src="@{'data:'+${photo.mimeType}+';base64,'+${photo.base64}}"
-            alt="First slide">
+          <img class="d-block" style="max-width: 100%; max-height: 100%;"
+            th:src="@{'data:'+${photo.mimeType}+';base64,'+${photo.base64}}" alt="First slide">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
