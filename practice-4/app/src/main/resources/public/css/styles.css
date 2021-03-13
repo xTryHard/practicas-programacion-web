@@ -188,3 +188,8 @@ th, td {
   filter: invert(80%);
 }
 
+.button-delete {
+  position:absolute !important;
+  top:5px !important;
+  right:5px !important;
+}

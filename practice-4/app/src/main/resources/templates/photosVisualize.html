@@ -14,6 +14,7 @@
       <div id="product-heading">
         <h1 class="heading" th:text="'Datos de la foto: '+${photo.name}">Subir Fotos Producto</h1>
       </div>
+      <button type="submit" class="btn btn-primary" onclick="history.back()"> Regresar </button>
       <div class="card">
         <img th:src="@{'data:'+${photo.mimeType}+';base64,'+${photo.base64}}" class="card-img-top" alt="Foto enviada">
         <div class="card-body">

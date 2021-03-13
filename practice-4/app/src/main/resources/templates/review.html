@@ -55,7 +55,7 @@
             <h5 class="card-title text-left"
               th:text="'Nombre: '+${comment.name}+'      -      Fecha: '+${comment.date}">Nombre:
               Fulano - Fecha: Hoy</h5>
-            <a th:if="${isAdmin}" class="btn btn-danger pull-right"
+            <a th:if="${isAdmin}" class="btn btn-danger float-right button-delete"
               th:href="'/admin/delete-comment/'+${product.id}+'/'+${comment.id}">
               <i class="far fa-trash-alt"></i>
             </a>
