@@ -120,6 +120,9 @@ public class AdminController extends BaseController{
      //   }
         model.put("photos", photos);
         
+        ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+
+        model.put("cartAmount", userShoppingCart.getTotalAmount());
         ctx.render("/templates/photos.html", model);
       });
 
@@ -127,14 +130,14 @@ public class AdminController extends BaseController{
         HashMap<String, Object> model = new HashMap<String, Object>();
 
         int id = Integer.parseInt(ctx.pathParam("id"));
-       // if (isCreating) {
-          List<Photo> photos = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
-          Photo photo = photos.get(id);
-          model.put("photo", photo);
-      //  } else {
-      //    Photo photo = PhotoServices.getInstance().find(id);
-        //  model.put("photo", photo);
-     //   }
+
+        List<Photo> photos = new ArrayList<Photo>(ctx.sessionAttribute("photos"));
+        Photo photo = photos.get(id);
+        model.put("photo", photo);
+
+        ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+        model.put("cartAmount", userShoppingCart.getTotalAmount());
+
         ctx.render("/templates/photosVisualize.html", model);
       });
 

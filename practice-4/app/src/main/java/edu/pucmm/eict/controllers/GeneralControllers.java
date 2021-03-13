@@ -65,31 +65,6 @@ public class GeneralControllers extends BaseController {
 
     });
 
-    app.before("/shop", ctx -> {
-      
-      String admin = ctx.sessionAttribute("admin");
-      String autoAuthCookie = ctx.sessionAttribute("rememberMe");
-
-      // invalidate session if admin leaves admin block
-      if (admin != null && autoAuthCookie == null) {
-        ctx.sessionAttribute("admin", null);
-        System.out.println("Si");
-        ShoppingCartServices.getInstance().setAdminMode(false);
-      }
-    });
-
-    app.before("/cart", ctx -> {
-      String admin = ctx.sessionAttribute("admin");
-      String autoAuthCookie = ctx.sessionAttribute("rememberMe");
-
-      // invalidate session if admin leaves admin block
-      if (admin != null && autoAuthCookie == null) {
-        ctx.sessionAttribute("admin", null);
-        System.out.println("Si");
-        ShoppingCartServices.getInstance().setAdminMode(false);
-      }
-    });
-
     app.get("/", ctx -> {
       ctx.redirect("/shop");
     });
@@ -334,6 +309,8 @@ public class GeneralControllers extends BaseController {
       } else {
         model.put("isAdmin", false);
       }
+      ShoppingCart userShoppingCart = ctx.sessionAttribute("shopping-cart");
+      model.put("cartAmount", userShoppingCart.getTotalAmount());
       ctx.render("/templates/review.html", model);
     });
 

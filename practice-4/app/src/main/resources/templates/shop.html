@@ -65,12 +65,12 @@
             <th scope="col">Precio (RD$)</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Acción 1</th>
-            <th scope="col">Acción 2</th>
+            <th scope="col">Visualizar producto</th>
           </tr>
         </thead>
         <tbody class="bg-tbody">
           <tr th:each="product : ${products}">
-            <td style="width: 35%" th:text="${product.name}"></td>
+            <td style="width: 30%" th:text="${product.name}"></td>
             <td style="width: 25%" th:text="${product.price}"></td>
             <td style="width: 13.33%;">
               <form method="POST" th:id="'amount-form-'+${product.id}" th:action="'shop/add/'+${product.id}"><input
@@ -79,7 +79,7 @@
             <td style="width: 13.33%"><button type="submit" class="btn btn-success"
                 th:form="'amount-form-'+${product.id}">Agregar</button>
             </td>
-            <td style="width: 13.33%"><a class="btn btn-secondary" th:href="'/review/'+${product.id}">Ver más</a>
+            <td style="width: 18.33%"><a class="btn btn-secondary" th:href="'/review/'+${product.id}">Ver más</a>
             </td>
           </tr>
         </tbody>
@@ -94,7 +94,7 @@
               <span class="sr-only">Previous</span>
             </a>
           </li>
-          <li class="page-item"><a class="page-link info" href="#" th:value="${page}">1</a></li>
+          <li class="page-item"><a class="page-link info" href="#" th:text="${page}">1</a></li>
           <li class="page-item">
             <a th:class="'page-link info'+${nextBtn}" href="/shop?lastPage=1" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>

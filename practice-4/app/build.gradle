@@ -11,9 +11,11 @@
 //     id 'application'
 // }
 
-apply plugin: "application"
-apply plugin: "java"
-
+plugins {
+    id "java"
+    id "application"
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
 mainClassName = "edu.pucmm.eict.App"
 
 repositories {
@@ -47,6 +49,12 @@ dependencies {
     //JPA HIBERNATE
     implementation 'org.hibernate:hibernate-core:5.4.17.Final'
     implementation 'org.hibernate:hibernate-entitymanager:5.4.17.Final'
+}
+
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
 }
 
 // application {
