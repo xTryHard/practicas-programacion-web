@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="/templates/shop.html::head">
+  <title>The IT Shop | comentarios </title>
+</head>
+
+<body>
+  <header th:replace="/templates/shop.html::main-header">
+  </header>
+  <main>
+    <div id="product-heading">
+      <h1 class="heading">Review Producto</h1>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol id="ol" class="carousel-indicators">
+        <li th:each="photo, index : ${photos}" data-target="#carouselExampleIndicators" th:data-slide-to="${index}"
+          class="choose"></li>
+      </ol>
+      <div id="inner" class="carousel-inner">
+        <div th:each="photo, index : ${photos}" class="carousel-item">
+          <img class="d-block" style="max-width: 100%; max-height: 100%;"
+            th:src="@{'data:'+${photo.mimeType}+';base64,'+${photo.base64}}" alt="First slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon text-info" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon text-info" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <br>
+    <div class="card mx-auto" style="width: 55.5rem;">
+      <div class="card-body">
+        <h5 class="card-title text-center">Descripción</h5>
+        <p class="card-text" th:text="${product.description}">Some quick example text to build on the card title and
+          make up the bulk of the card's
+          content.</p>
+      </div>
+    </div>
+    <hr>
+    <div id=" product-heading-2">
+      <h2 class="heading-sm">Comentarios Producto</h2>
+    </div>
+
+    <div class="card mb-3 wow fadeIn mx-auto" style="width: 55.5rem; ">
+      <div class="card-header font-weight-bold" th:text="'Comentarios '+${totalComments}">Comentarios</div>
+      <div th:each="comment, index : ${comments}" class="card-body" style="overflow-y: auto; max-height: 400px;">
+        <div class=" card mx-auto" style="width: 45rem; margin-bottom: 0.5rem;">
+          <div class="card-body">
+            <h5 class="card-title text-left"
+              th:text="'Nombre: '+${comment.name}+'      -      Fecha: '+${comment.date}">Nombre:
+              Fulano - Fecha: Hoy</h5>
+            <a th:if="${isAdmin}" class="btn btn-danger float-right button-delete"
+              th:href="'/admin/delete-comment/'+${product.id}+'/'+${comment.id}">
+              <i class="far fa-trash-alt"></i>
+            </a>
+            <p class="card-text" th:text="${comment.message}">Some quick example text to build on the card title and
+              make
+              up the bulk of
+              the card's
+              content.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr>
+    <div class=" card mb-3 wow fadeIn mx-auto" style="width: 55.5rem;">
+      <div class="card-header font-weight-bold">Deja un comentario</div>
+      <div class="card-body">
+
+        <!-- Default form reply -->
+        <form th:action="'/comments/'+${product.id}" method="POST">
+
+          <!-- Comment -->
+          <div class="form-group">
+            <label for="replyFormComment">Comentario</label>
+            <textarea class="form-control" id="replyFormComment" rows="5" name="commentMessage" required></textarea>
+          </div>
+
+          <!-- Name -->
+          <label for="replyFormName">Nombre</label>
+          <input type="text" id="replyFormName" class="form-control" name="commentName" required>
+
+          <br>
+
+          <div class="text-left mt-4">
+            <button class="btn btn-info btn-md" type="submit">Publicar</button>
+          </div>
+        </form>
+        <!-- Default form reply -->
+      </div>
+    </div>
+
+  </main>
+  <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://kit.fontawesome.com/156ff56ddf.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+
+  <script>
+    let ol = document.getElementById("ol");
+    let firstChilds = ol.getElementsByClassName("choose");
+
+    let firstChild = firstChilds[0];
+    console.log(firstChild);
+    firstChild.classList.add("active");
+
+    let inner = document.getElementById("inner");
+    let firstItems = inner.getElementsByClassName("carousel-item");
+    let firstItem = firstItems[0];
+    firstItem.classList.add("active");
+
+    console.log(ol);
+    console.log(ol.getElementsByClassName("choose"));
+  </script>
+</body>
+
+</html>
